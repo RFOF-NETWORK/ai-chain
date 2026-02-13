@@ -53,9 +53,9 @@ Architekturrolle
 
 Die API bildet die Kommunikationsschicht der AI‑Chain:
 
-`
+```
 UI → api/server.py → api/main.py → ai-chain.py → vm_core → core/*
-`
+```
 
 Sie ist verantwortlich für:
 
@@ -72,7 +72,7 @@ Sie ist verantwortlich für:
 
 API‑Flow (vereinfacht)
 
-`
+```
 UI request
     → server.py (route)
     → main.py (dispatch)
@@ -81,7 +81,7 @@ UI request
     → core/blockchain (write)
     → viewer/* (read)
     → return JSON response
-`
+```
 
 ---
 
