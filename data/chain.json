@@ -1,0 +1,21 @@
+{
+  "chain": [],
+  "state": {
+    "users": {},
+    "tokens": {
+      "AI": {},
+      "COIN": {},
+      "AIC-LP": {}
+    },
+    "liquidity": {
+      "ai_total": 0,
+      "coin_total": 0,
+      "lp_total": 0
+    },
+    "eccu_safe": {
+      "AI": 0,
+      "COIN": 0,
+      "AIC-LP": 0
+    }
+  }
+}
