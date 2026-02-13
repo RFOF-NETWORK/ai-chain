@@ -1,0 +1,127 @@
+# AI‑CHAIN CORPORATE TECHNOLOGY LICENSE (CTL‑5)
+de‑en integrated documentation  
+Non‑notarized internal corporate license
+
+This Corporate Technology License (CTL‑5) defines the rights, usage boundaries,
+and technological guarantees of the AI‑Chain / GoldenChain / ECCU ecosystem as
+provided by the company AI‑Chain.  
+This license is **not** part of the notarized VC.ecc LICENSE and is **not**
+embedded into the blockchain.  
+It applies exclusively to corporate partners, private banks, decentralized
+banks, exchanges, state‑level financial institutions, credit systems, unit
+funds, and energy‑based tokenization infrastructures.
+
+---
+
+## 1. Scope of the License  
+This license grants the right to use, integrate, and operate the following
+technologies:
+
+- GoldenChain (Blockchain component inside RFOF‑BOxChain)
+- ECCU (Electric Credit Coin Units)
+- ECCU‑Safe (permanent locked value)
+- ECCU‑Fund (NAV‑based investment system)
+- VC.ecc (Fee‑Split 45/42/10/3)
+- Energy‑to‑Token Binding (E2TB)
+- AI‑Chain VM (deterministic execution environment)
+- BOxBlock & BlockBOxen Chain (RFOF‑GOLDEN)
+
+The license covers all financial, banking, governmental, and energy‑based
+applications built on top of these systems.
+
+---
+
+## 2. Energy‑to‑Token Binding (E2TB)  
+AI‑Chain introduces a novel mechanism where:
+
+- the electrical energy consumed by a device  
+- the storage capacity available on that device  
+- and the computational footprint inside the VM  
+
+can be **bound into tokenized units**.
+
+These units represent:
+
+- measurable energy  
+- deterministic storage  
+- irreversible value creation  
+- and permanent economic anchoring inside the ECCU‑Safe
+
+Energy becomes a **non‑volatile value carrier**.
+
+---
+
+## 3. Value Preservation Guarantee  
+The AI‑Chain / GoldenChain architecture ensures:
+
+- no ECCU‑Safe value can ever be released  
+- no energy‑bound token can lose its fundamental value  
+- no ECCU‑Fund share can be diluted  
+- no LICENSE‑Event can be altered retroactively  
+- no block can be rewritten or removed  
+
+This creates a **perpetual, non‑inflationary, energy‑anchored value system**.
+
+---
+
+## 4. Corporate Usage Rights  
+This license grants AI‑Chain the right to provide its technology to:
+
+- private banks  
+- decentralized banks  
+- stock exchanges  
+- state‑level bond issuers  
+- credit institutions  
+- unit‑fund operators  
+- energy‑tokenization platforms  
+- sovereign digital asset infrastructures  
+
+Integration is permitted in:
+
+- financial products  
+- energy‑based assets  
+- tokenized bonds  
+- credit systems  
+- decentralized markets  
+- sovereign digital currencies  
+
+---
+
+## 5. VM‑Based Validation  
+All ECCU‑mechanisms were first validated inside the AI‑Chain VM:
+
+- Fee‑Split  
+- Safe‑Locking  
+- Owner/Fund Balances  
+- Energy‑to‑Token Binding  
+- Fundamental Value Calculation  
+- LICENSE‑Event Generation  
+
+The VM serves as the **reference implementation** for all licensed partners.
+
+---
+
+## 6. Restrictions  
+This license does **not** grant:
+
+- rights to modify VC.ecc  
+- rights to alter ECCU‑Safe logic  
+- rights to bypass Fee‑Split  
+- rights to create derivative chains  
+- rights to notarize this license  
+
+---
+
+## 7. Ownership  
+All rights remain exclusively with:
+
+**AI‑Chain / GoldenChain Technologies**  
+Sovereign Blockchain Architecture & Energy‑Bound Value Systems
+
+---
+
+## 8. Final Clause  
+This license is **internal**, **corporate**, **non‑notarized**,  
+and serves as the legal and technical foundation for all enterprise‑level
+deployments of the AI‑Chain / GoldenChain / ECCU ecosystem.
+
