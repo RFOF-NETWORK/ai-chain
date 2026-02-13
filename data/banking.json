@@ -1,0 +1,20 @@
+{
+  "fiat_currencies": ["EUR", "USD"],
+  "min_deposit": 10,
+  "max_deposit": 100000,
+  "providers": {
+    "paypal": {
+      "enabled": true
+    },
+    "stripe": {
+      "enabled": true
+    },
+    "bank_api": {
+      "enabled": true
+    }
+  },
+  "logging": {
+    "enabled": true,
+    "store_sensitive": false
+  }
+}
