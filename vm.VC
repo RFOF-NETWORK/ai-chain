@@ -1,0 +1,115 @@
+# vm.VC
+# Souveräne VM + VC Runtime für AI-Chain
+
+import json
+from pathlib import Path
+from typing import Any, Callable, Dict
+
+ROOT = Path(__file__).resolve().parent
+CHAIN_FILE = ROOT / "chain.json"
+
+from core.blockchain import AIChain
+from core.fees import Fees  # bleibt als Platzhalter, wenn du fees.py später füllst
+from wallet.wallet_system import WalletSystem
+from liquidity.liquidity_pool import LiquidityPool
+from viewer.chain_viewer import ChainViewer
+import smartcontracts
+
+import api.deposit as api_deposit
+import api.withdraw as api_withdraw
+import api.marketprice as api_marketprice
+import api.sync as api_sync
+
+
+class VMContext:
+    def __init__(self) -> None:
+        self.blockchain: AIChain | None = None
+        self.fees: Fees | None = None
+        self.wallet: WalletSystem | None = None
+        self.liquidity: LiquidityPool | None = None
+        self.viewer: ChainViewer | None = None
+        self.smartcontracts = smartcontracts
+        self.token_ai = None
+        self.token_coin = None
+        self.token_aic_lp = None
+        self.chain_state: dict[str, Any] = {}
+
+
+class VC:
+    def __init__(self) -> None:
+        self.vm = VMContext()
+        self.internal_api: Dict[str, Callable[..., Any]] = {}
+        self.external_api: Dict[str, Callable[..., Any]] = {}
+
+    def load_chain_state(self) -> None:
+        if CHAIN_FILE.exists():
+            with CHAIN_FILE.open("r", encoding="utf-8") as f:
+                self.vm.chain_state = json.load(f)
+        else:
+            self.vm.chain_state = {}
+
+    def save_chain_state(self) -> None:
+        with CHAIN_FILE.open("w", encoding="utf-8") as f:
+            json.dump(self.vm.chain_state, f, indent=2, ensure_ascii=False)
+
+    def init_vm(self) -> None:
+        self.load_chain_state()
+
+        self.vm.blockchain = AIChain()
+        self.vm.fees = Fees()
+        self.vm.wallet = WalletSystem()
+
+        # Tokens + Pool
+        self.vm.token_ai, self.vm.token_coin, self.vm.token_aic_lp = (
+            smartcontracts.create_ai_chain_contracts(self.vm.blockchain)
+        )
+        self.vm.liquidity = LiquidityPool(
+            self.vm.blockchain,
+            self.vm.token_ai,
+            self.vm.token_coin,
+            self.vm.token_aic_lp,
+        )
+
+        self.vm.viewer = ChainViewer(self.vm.blockchain)
+
+        self._register_internal_api()
+
+    def _register_internal_api(self) -> None:
+        self.internal_api["deposit"] = lambda *args, **kwargs: api_deposit.handle(
+            self.vm, *args, **kwargs
+        )
+        self.internal_api["withdraw"] = lambda *args, **kwargs: api_withdraw.handle(
+            self.vm, *args, **kwargs
+        )
+        self.internal_api["marketprice"] = (
+            lambda *args, **kwargs: api_marketprice.handle(self.vm, *args, **kwargs)
+        )
+        self.internal_api["sync"] = lambda *args, **kwargs: api_sync.handle(
+            self.vm, *args, **kwargs
+        )
+
+        self.internal_api["portfolio"] = (
+            lambda address: self.vm.viewer.get_portfolio(address)
+        )
+
+    def register_external_endpoint(
+        self, name: str, adapter: Callable[..., Any]
+    ) -> None:
+        self.external_api[name] = adapter
+
+    def call_internal(self, name: str, *args, **kwargs) -> Any:
+        if name not in self.internal_api:
+            raise KeyError(f"Unbekannte interne API-Funktion: {name}")
+        return self.internal_api[name](*args, **kwargs)
+
+
+_vm_vc_singleton: VC | None = None
+
+
+def get_vm_vc() -> VC:
+    global _vm_vc_singleton
+    if _vm_vc_singleton is None:
+        _vm_vc_singleton = VC()
+        _vm_vc_singleton.init_vm()
+    return _vm_vc_singleton
+      
