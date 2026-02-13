@@ -1,0 +1,238 @@
+# vc_ecc.py
+# VC.ecc – Electric Credit Coin Units & eccu.safe Tresor
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Dict, Literal, TypedDict, Any
+
+
+TokenSymbol = Literal["AI", "COIN", "AIC-LP"]
+
+
+class FeeSplit(TypedDict):
+    base: float      # 45% – bleibt im bisherigen Systemfluss
+    safe: float      # 42% – geht in den eccu.safe
+    owner: float     # 10% – Unternehmens-Wallet
+    eccu_fund: float # 3%  – ECCU-Fonds
+
+
+@dataclass
+class SafeSlot:
+    """
+    Repräsentiert den Tresor-Anteil eines einzelnen Tokens.
+    Diese Werte werden NIE wieder freigegeben.
+    """
+    token: TokenSymbol
+    amount: float = 0.0  # gesperrte Token-Menge
+
+
+@dataclass
+class ECCUSystemState:
+    """
+    Globaler ECCU-Zustand:
+    - Safe-Slots pro Token
+    - Owner- und Fonds-Balances (nur logisch, echte Balances liegen in der Chain)
+    """
+    safe_slots: Dict[TokenSymbol, SafeSlot] = field(default_factory=dict)
+    owner_balance: Dict[TokenSymbol, float] = field(default_factory=dict)
+    eccu_fund_balance: Dict[TokenSymbol, float] = field(default_factory=dict)
+
+    def ensure_token(self, symbol: TokenSymbol) -> None:
+        if symbol not in self.safe_slots:
+            self.safe_slots[symbol] = SafeSlot(token=symbol, amount=0.0)
+        if symbol not in self.owner_balance:
+            self.owner_balance[symbol] = 0.0
+        if symbol not in self.eccu_fund_balance:
+            self.eccu_fund_balance[symbol] = 0.0
+
+
+class VCECC:
+    """
+    VC.ecc – Electric Credit Coin Units & eccu.safe
+
+    Aufgaben:
+    - 45/42/10/3-Split von Fees berechnen
+    - 42% in den eccu.safe buchen (pro Token)
+    - 10% dem Unternehmens-Wallet zuordnen (logisch)
+    - 3% dem ECCU-Fonds zuordnen (logisch)
+    - fundamentale Werte (Safe-basiert) berechnen
+    - LICENSE-Kontext für Blöcke liefern (ohne Blockchain-Logik zu ersetzen)
+    """
+
+    # 1 ECCU-Unit = Wert von 2 TB (1 TB AI, 1 TB COIN)
+    ECCU_PER_2TB: float = 1.0
+
+    def __init__(self, license_id: str, owner_address: str, eccu_fund_address: str):
+        self.license_id = license_id
+        self.owner_address = owner_address
+        self.eccu_fund_address = eccu_fund_address
+        self.state = ECCUSystemState()
+
+    # ------------------------------------------------------------------ #
+    # Fee-Split-Logik 45 / 42 / 10 / 3
+    # ------------------------------------------------------------------ #
+
+    def split_fee(self, amount: float) -> FeeSplit:
+        """
+        Teilt eine Fee in:
+        - 45% base
+        - 42% safe
+        - 10% owner
+        - 3% eccu_fund
+        """
+        if amount <= 0:
+            return FeeSplit(base=0.0, safe=0.0, owner=0.0, eccu_fund=0.0)
+
+        base = amount * 0.45
+        safe = amount * 0.42
+        owner = amount * 0.10
+        eccu_fund = amount * 0.03
+
+        # numerische Rundungsfehler minimal ausgleichen
+        total = base + safe + owner + eccu_fund
+        if total != amount:
+            diff = amount - total
+            base += diff
+
+        return FeeSplit(base=base, safe=safe, owner=owner, eccu_fund=eccu_fund)
+
+    # ------------------------------------------------------------------ #
+    # Safe-Buchungen
+    # ------------------------------------------------------------------ #
+
+    def lock_in_safe(self, token: TokenSymbol, amount: float) -> None:
+        """
+        Bucht Token-Menge in den eccu.safe-Slot des Tokens.
+        Diese Menge ist dauerhaft gebunden.
+        """
+        if amount <= 0:
+            return
+        self.state.ensure_token(token)
+        self.state.safe_slots[token].amount += amount
+
+    def credit_owner(self, token: TokenSymbol, amount: float) -> None:
+        """
+        Logische Gutschrift für das Unternehmens-Wallet.
+        Die tatsächliche Token-Übertragung erfolgt in der Chain/VM.
+        """
+        if amount <= 0:
+            return
+        self.state.ensure_token(token)
+        self.state.owner_balance[token] += amount
+
+    def credit_eccu_fund(self, token: TokenSymbol, amount: float) -> None:
+        """
+        Logische Gutschrift für den ECCU-Fonds.
+        Die tatsächliche Token-Übertragung erfolgt in der Chain/VM.
+        """
+        if amount <= 0:
+            return
+        self.state.ensure_token(token)
+        self.state.eccu_fund_balance[token] += amount
+
+    # ------------------------------------------------------------------ #
+    # Integration mit Fees-Logik (wird von Fees aufgerufen)
+    # ------------------------------------------------------------------ #
+
+    def process_fee(
+        self,
+        vm: Any,
+        token: TokenSymbol,
+        raw_fee_amount: float,
+        base_fee_applier: callable | None = None,
+    ) -> FeeSplit:
+        """
+        Wird von der Fees-Logik aufgerufen.
+
+        - Splittet die Fee
+        - Wendet 45% über base_fee_applier an (z.B. Pool/Wallet)
+        - Bucht 42% in den Safe
+        - Bucht 10% Owner
+        - Bucht 3% ECCU-Fonds
+        - Schreibt ein Fee-/LICENSE-Event in die Blockchain
+        """
+        split = self.split_fee(raw_fee_amount)
+
+        # 45%: bestehende Logik (Pool, Wallet, etc.)
+        if base_fee_applier is not None and split["base"] > 0:
+            base_fee_applier(vm, token, split["base"])
+
+        # 42%: Safe
+        if split["safe"] > 0:
+            self.lock_in_safe(token, split["safe"])
+
+        # 10%: Owner (logisch)
+        if split["owner"] > 0:
+            self.credit_owner(token, split["owner"])
+
+        # 3%: ECCU-Fonds (logisch)
+        if split["eccu_fund"] > 0:
+            self.credit_eccu_fund(token, split["eccu_fund"])
+
+        # Blockchain-Event mit LICENSE-Kontext
+        if hasattr(vm, "blockchain"):
+            vm.blockchain.add_block(
+                {
+                    "event": "fee_split",
+                    "token": token,
+                    "raw_fee": raw_fee_amount,
+                    "split": dict(split),
+                    "license": self.license_id,
+                    "owner_address": self.owner_address,
+                    "eccu_fund_address": self.eccu_fund_address,
+                }
+            )
+
+        return split
+
+    # ------------------------------------------------------------------ #
+    # Fundamentale Wert-Berechnung (für Charts 4 & 5)
+    # ------------------------------------------------------------------ #
+
+    def get_fundamental_value_token(
+        self,
+        token: TokenSymbol,
+        price_in_coin: float,
+        coin_to_eccu_rate: float,
+    ) -> float:
+        """
+        Berechnet einen fundamentalen Wert eines Tokens in ECCU,
+        basierend auf:
+        - Safe-Menge des Tokens
+        - aktuellem Preis in COIN
+        - COIN→ECCU-Umrechnung (z.B. 2 TB = 1 ECCU)
+        """
+        self.state.ensure_token(token)
+        safe_amount = self.state.safe_slots[token].amount
+
+        if safe_amount <= 0 or price_in_coin <= 0 or coin_to_eccu_rate <= 0:
+            return 0.0
+
+        value_in_coin = safe_amount * price_in_coin
+        value_in_eccu = value_in_coin * coin_to_eccu_rate
+        return value_in_eccu
+
+    # ------------------------------------------------------------------ #
+    # LICENSE-Metadaten für Blöcke
+    # ------------------------------------------------------------------ #
+
+    def build_license_metadata(
+        self,
+        block_index: int,
+        block_hash: str,
+        actor: str,
+        context: str,
+    ) -> Dict[str, Any]:
+        """
+        Erzeugt ein LICENSE-Metadaten-Objekt, das in einen Block
+        eingebettet werden kann.
+        """
+        return {
+            "license_id": self.license_id,
+            "license_ref": f"LICENSE ID:[{self.license_id}] (Repository & Chain License)",
+            "block_index": block_index,
+            "block_hash": block_hash,
+            "actor": actor,
+            "context": context,
+        }
+
