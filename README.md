@@ -23,7 +23,7 @@ Diese Master‑README.md fasst alles zusammen.
 
 1. Architekturüberblick
 
-`
+```
 ai_chain/
 │
 ├─ core/                  → VM‑Kern (blockchain, fees, vm_core)
@@ -44,13 +44,13 @@ ai_chain/
 ├─ ai-chain.py            → öffentliche Python‑Schnittstelle
 ├─ vm.VC                  → VC‑Kontext
 └─ VC.ecc                 → ECCU‑Lizenz‑Modul
-`
+```
 
 ---
 
 2. VM‑Kontext (vm.VC)
 
-`
+```
 vm.VC
 │
 ├── VM-Kontext
@@ -81,7 +81,7 @@ vm.VC
       ├── save_chain()
       ├── routeexternalto_internal()
       └── keep_alive()
-`
+```
 
 ---
 
