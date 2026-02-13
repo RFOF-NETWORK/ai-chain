@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "network": "ai_chain_mainnet",
+  "auto_sync": true,
+  "ui_theme": "dark",
+  "language": "de-en"
+}
