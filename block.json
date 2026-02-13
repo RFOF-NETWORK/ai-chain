@@ -1,0 +1,69 @@
+{
+  "genesis_block": {
+    "index": 0,
+    "timestamp": "2020-01-01T00:00:00Z",
+    "previous_hash": "0",
+    "hash": "GENESIS_HASH",
+    "data": {
+      "type": "genesis",
+      "title": "AI-Chain Genesis Block",
+      "description": "Token Genesis for AI, COIN, AIC-LP based on AI-Chain.",
+      "tokens": {
+        "AI": { "supply": 0 },
+        "COIN": { "supply": 0 },
+        "AIC-LP": { "supply": 0 }
+      },
+      "license": {
+        "license_id": "PZQQET-VC-ECC-2020",
+        "license_ref": "LICENSE ID:[PZQQET-VC-ECC-2020] (Repository & Chain License)",
+        "owner": "J.D.Koch",
+        "origin": "RFOF-NETWORK / Quantum Ready Foundation / GlobalChain"
+      }
+    }
+  },
+  "example_block": {
+    "index": 1,
+    "timestamp": "2026-02-13T05:30:00Z",
+    "previous_hash": "GENESIS_HASH",
+    "hash": "BLOCK_1_HASH",
+    "data": {
+      "transactions": [
+        {
+          "tx_hash": "TX_HASH_1",
+          "from": "WALLET_ADDRESS_1",
+          "to": "WALLET_ADDRESS_2",
+          "amount": 10,
+          "token": "AI",
+          "username_from": "user_alpha",
+          "username_to": "user_beta"
+        }
+      ],
+      "events": [
+        {
+          "event": "fee_split",
+          "token": "AI",
+          "raw_fee": 0.01,
+          "split": {
+            "base": 0.0045,
+            "safe": 0.0042,
+            "owner": 0.001,
+            "eccu_fund": 0.0003
+          }
+        }
+      ],
+      "safe_snapshot": {
+        "AI": 100.0,
+        "COIN": 50.0,
+        "AIC-LP": 10.0
+      },
+      "license_metadata": {
+        "license_id": "PZQQET-VC-ECC-2020",
+        "license_ref": "LICENSE ID:[PZQQET-VC-ECC-2020] (Repository & Chain License)",
+        "block_index": 1,
+        "block_hash": "BLOCK_1_HASH",
+        "actor": "user_alpha",
+        "context": "transaction:AI"
+      }
+    }
+  }
+}
