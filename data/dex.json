@@ -1,0 +1,12 @@
+{
+  "supported_chains": ["ETH", "BSC", "POLYGON"],
+  "token_mapping": {
+    "AI": "AI",
+    "COIN": "COIN",
+    "AIC_LP": "AIC_LP"
+  },
+  "dex_endpoints": {
+    "uniswap": "https://api.uniswap.org",
+    "generic": "https://dex.example.com"
+  }
+}
