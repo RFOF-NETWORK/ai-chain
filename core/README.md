@@ -30,9 +30,9 @@ Architekturrolle
 
 core/ bildet die unterste operative Schicht der AI‑Chain:
 
-`
+```
 UI → API → ai-chain.py → vm_core → core/* → data/chain.json
-`
+```
 
 - führt Transaktionen deterministisch aus  
 - erzeugt Blöcke  
@@ -46,7 +46,7 @@ UI → API → ai-chain.py → vm_core → core/* → data/chain.json
 
 VM‑Flow (vereinfacht)
 
-`
+```
 submit_transaction()
     → fees.calculate()
     → fees.apply_*()
@@ -55,7 +55,7 @@ submit_transaction()
             → LICENSE‑Event
     → blockchain.add_transaction()
     → return tx_hash
-`
+```
 
 ---
 
