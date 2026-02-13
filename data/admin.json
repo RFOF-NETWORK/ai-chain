@@ -1,0 +1,7 @@
+{
+  "admin_username": "RFOF-NETWORK",
+  "admin_address": "AICXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "admin_phrase_hash": "DOUBLE_SHA256_OF_ADMIN_24_WORD_PHRASE",
+  "is_admin": true,
+  "role": "GENESIS_OWNER"
+}
