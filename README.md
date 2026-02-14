@@ -1,4 +1,15 @@
 # AI‑Chain — RFOF‑GOLDEN / GoldenChain / ECCU Ecosystem
+
+<div align="right">
+
+<a href="https://github.com/RFOF-NETWORK?tab=repositories" target="_blank">
+  <img src="https://img.shields.io/badge/📌%20Pin%20this%20Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="Pin Repository">
+</a>
+
+<sub><i>✦ Pinne AI‑Chain — werde Teil der souveränen Evolution ✨ Ein Klick. Ein Pin. Ein Schritt in die RFOF‑GOLDEN‑Chain. ✦</i></sub>
+
+</div>
+
 ## ***de‑en integrated documentation*""
 ---
 <div align="center">
@@ -24,10 +35,23 @@ AI‑CHAIN RFOF‑GOLDEN‑CHAIN
 
 <div align="center">
 
-⭐ **Stars:** ![Stars](https://img.shields.io/github/stars/RFOF-NETWORK/ai-chain?style=flat-square)  
-🔱 **Forks:** ![Forks](https://img.shields.io/github/forks/RFOF-NETWORK/ai-chain?style=flat-square)  
-🧩 **Pull Requests:** ![PRs](https://img.shields.io/github/issues-pr/RFOF-NETWORK/ai-chain?style=flat-square)  
-👤 **Contributors:** ![Contributors](https://img.shields.io/github/contributors/RFOF-NETWORK/ai-chain?style=flat-square)
+⭐ **Stars:**  
+<img src="https://img.shields.io/github/stars/RFOF-NETWORK/ai-chain?style=flat-square&color=FFD700" alt="Stars">
+
+🔱 **Forks:**  
+<img src="https://img.shields.io/github/forks/RFOF-NETWORK/ai-chain?style=flat-square&color=7FDBFF" alt="Forks">
+
+👁️ **Watchers:**  
+<img src="https://img.shields.io/github/watchers/RFOF-NETWORK/ai-chain?style=flat-square&color=00FFFF" alt="Watchers">
+
+🐞 **Bug Reports (Issues):**  
+<img src="https://img.shields.io/github/issues/RFOF-NETWORK/ai-chain?style=flat-square&color=8A0303" alt="Issues">
+
+🧩 **Pull Requests:**  
+<img src="https://img.shields.io/github/issues-pr/RFOF-NETWORK/ai-chain?style=flat-square&color=39FF14" alt="Pull Requests">
+
+👤 **Contributors:**  
+<img src="https://img.shields.io/github/contributors/RFOF-NETWORK/ai-chain?style=flat-square&color=9400D3" alt="Contributors">
 
 </div>
 
