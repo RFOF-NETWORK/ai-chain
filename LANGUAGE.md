@@ -44,4 +44,3 @@ ECCU ist eine souveräne Codesprache der RFOF‑GOLDEN‑Chain.
 Jegliche Nutzung, Erweiterung oder Implementierung muss die Prinzipien der
 Deterministik, Parität und Souveränität respektieren.
 ```
-
