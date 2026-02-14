@@ -1,0 +1,42 @@
+# Python Cache & Build
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+build/
+dist/
+
+# VC / ECCU temporäre Dateien
+*.ecc.tmp
+*.vc.tmp
+*.VC.tmp
+*.eccu.tmp
+
+# JSON State Backups
+*.state.backup
+*.json.tmp
+*.state.tmp
+
+# Sensitive Environments
+.env
+.env.*
+venv/
+venv*/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git Merge Junk
+*.orig
+*.rej
