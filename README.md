@@ -12,6 +12,7 @@
 
 ## ***de‑en integrated documentation*""
 ---
+
 <div align="center">
 
 # ✦ AI‑CHAIN — SOVEREIGN MECHATRONIC BLOCKCHAIN ✦  
