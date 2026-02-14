@@ -3,7 +3,7 @@ name: Bug Report
 about: Melde einen Fehler in der AI‑Chain – im VC‑Layer, VMCore, BOxChain oder State‑System.
 title: "[BUG] Anomalie im mechatronischen Ablauf"
 labels: ["bug", "needs-triage"]
-assignees: ["JustinKoch"]
+assignees: ["@RFOF-NETWORK"]
 
 body:
   - type: markdown
