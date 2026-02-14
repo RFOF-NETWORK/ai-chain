@@ -1,0 +1,20 @@
+* text=auto
+
+# Kernsprachen
+*.py    linguist-language=Python
+*.json  linguist-language=JSON
+*.md    linguist-language=Markdown
+*.html  linguist-language=HTML
+*.css   linguist-language=CSS
+
+# Souveräne Logikformate (eigene Codesprachen)
+*.VC    linguist-language=VC
+*.vc    linguist-language=VC
+*.ecc   linguist-language=ECCU
+*.eccu  linguist-language=ECCU
+
+# Immer als Text behandeln (niemals Binary)
+*.VC    text
+*.vc    text
+*.ecc   text
+*.eccu  text
