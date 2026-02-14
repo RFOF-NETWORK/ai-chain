@@ -1,14 +1,39 @@
 # AI‑Chain — RFOF‑GOLDEN / GoldenChain / ECCU Ecosystem
 
-<div align="right">
+<!-- BUTTON LEISTE -->
+<table width="100%">
+<tr>
+<td align="left">
+
+<a href="https://github.com/RFOF-NETWORK/ai-chain/wiki" target="_blank">
+  <img src="https://img.shields.io/badge/📘%20Open%20AI‑Chain%20Wiki-0366d6?style=for-the-badge&logo=github&logoColor=white" alt="AI‑Chain Wiki">
+</a>
+<br>
+<sub><i>✦ Entdecke die Logik hinter der eXtendet project RFOF‑GOLDEN‑Chain ECCU EXtention AI Chain ✦</i></sub>
+
+</td>
+
+<td align="center">
+
+<a href="https://github.com/RFOF-NETWORK/ai-chain/tree/main/docs" target="_blank">
+  <img src="https://img.shields.io/badge/📚%20AI‑Chain%20Docs-0A84FF?style=for-the-badge&logo=github&logoColor=white" alt="AI‑Chain Docs">
+</a>
+<br>
+<sub><i>⚙️ Tiefenlogik, States, VC‑Layer, Architektur — alles hier.</i></sub>
+
+</td>
+
+<td align="right">
 
 <a href="https://github.com/RFOF-NETWORK?tab=repositories" target="_blank">
   <img src="https://img.shields.io/badge/📌%20Pin%20this%20Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="Pin Repository">
 </a>
+<br>
+<sub><i>✦ Pinne AI‑Chain — werde Teil der souveränen Evolution ✦</i></sub>
 
-<sub><i>✦ Pinne AI‑Chain — werde Teil der souveränen Evolution ✨ Ein Klick. Ein Pin. Ein Schritt in die RFOF‑GOLDEN‑Chain. ✦</i></sub>
-
-</div>
+</td>
+</tr>
+</table>
 
  ***de‑en integrated documentation***
 
@@ -35,6 +60,7 @@ AI‑CHAIN RFOF‑GOLDEN‑CHAIN
 
 ---
 
+<!-- BUTTON LEISTE -->
 <div align="center">
 
 ⭐ **Stars:**  
@@ -60,14 +86,14 @@ AI‑CHAIN RFOF‑GOLDEN‑CHAIN
 ---
 
 <div align="center">
-      
+
 ```
-██████╗  █████╗ ██╗      ██████╗██╗███╗   ██╗
-██╔══██╗██╔══██╗██║     ██╔════╝██║████╗  ██║
-██████╔╝███████║██║     ██║     ██║██╔██╗ ██║
-██╔══██╗██╔══██║██║     ██║     ██║██║╚██╗██║
-██║  ██║██║  ██║███████╗╚██████╗██║██║ ╚████║
-╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝╚═╝  ╚═══╝
+ █████╗  ██╗   ██████╗ ██╗  ██╗ █████╗ ██╗███╗   ██╗
+██╔══██╗ ██║  ██╔════╝██║  ██║██╔══██╗██║████╗  ██║
+███████║ ██║  ██║     ███████║███████║██║██╔██╗ ██║
+██╔══██║ ██║  ██║     ██╔══██║██╔══██║██║██║╚██╗██║
+██║  ██║ ██║  ╚██████╗██║  ██║██║  ██║██║██║ ╚████║
+╚═╝  ╚═╝ ╚═╝   ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝
 ```
 
 </div>
