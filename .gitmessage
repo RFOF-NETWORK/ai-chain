@@ -1,0 +1,15 @@
+# AI‑Chain Commit Message Template
+# Beschreibung:
+#   Kurze, präzise Beschreibung der Änderung.
+#
+# Motivation:
+#   Warum ist diese Änderung notwendig?
+#
+# VC / ECCU:
+#   Welche souveränen Logikmodule sind betroffen?
+#
+# States:
+#   Welche JSON‑States wurden verändert?
+#
+# Tests:
+#   Welche deterministischen Tests wurden ausgeführt?
