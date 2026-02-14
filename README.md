@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/📘%20Open%20AI‑Chain%20Wiki-0366d6?style=for-the-badge&logo=github&logoColor=white" alt="AI‑Chain Wiki">
 </a>
 <br>
-<sub><i>✦ Entdecke die Logik hinter der eXtendet project RFOF‑GOLDEN‑Chain ECCU EXtention AI Chain ✦</i></sub>
+<sub><i>✦ Entdecke die Logik hinter der eXtendet, RFOF‑GOLDEN & ECCU AI Chain ✦</i></sub>
 
 </td>
 
