@@ -1,12 +1,174 @@
-AI‑Chain — RFOF‑GOLDEN / GoldenChain / ECCU Ecosystem
-de‑en integrated documentation
+# AI‑Chain — RFOF‑GOLDEN / GoldenChain / ECCU Ecosystem
 
-AI‑Chain ist eine souveräne, deterministische, auditierbare Blockchain‑Umgebung, die aus der
+<!-- BUTTON LEISTE -->
+<table width="100%">
+<tr>
+<td align="left">
+
+<a href="https://github.com/RFOF-NETWORK/ai-chain/wiki" target="_blank">
+  <img src="https://img.shields.io/badge/📘%20Open%20AI‑Chain%20Wiki-0366d6?style=for-the-badge&logo=github&logoColor=white" alt="AI‑Chain Wiki">
+</a>
+<br>
+<sub><i>✦ Entdecke die Logik hinter der eXtendet, RFOF‑GOLDEN & ECCU AI Chain ✦</i></sub>
+
+</td>
+
+<td align="center">
+
+<a href="https://github.com/RFOF-NETWORK/ai-chain/tree/main/docs" target="_blank">
+  <img src="https://img.shields.io/badge/📚%20AI‑Chain%20Docs-0A84FF?style=for-the-badge&logo=github&logoColor=white" alt="AI‑Chain Docs">
+</a>
+<br>
+<sub><i>⚙️ Tiefenlogik, States, VC‑Layer, Architektur — alles hier.</i></sub>
+
+</td>
+
+<td align="right">
+
+<a href="https://github.com/RFOF-NETWORK?tab=repositories" target="_blank">
+  <img src="https://img.shields.io/badge/📌%20Pin%20this%20Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="Pin Repository">
+</a>
+<br>
+<sub><i>✦ Pinne AI‑Chain — werde Teil der souveränen Evolution ✦</i></sub>
+
+</td>
+</tr>
+</table>
+
+ ***de‑en integrated documentation***
+
+---
+
+<div align="center">
+
+# ✦ AI‑CHAIN — SOVEREIGN MECHATRONIC BLOCKCHAIN ✦  
+### <span style="color:#7FDBFF;">BABYBLUE NEON</span> • <span style="color:#FFD700;">GOLDENCORE</span> • <span style="color:#8A0303;">DEEP‑ROOT</span>
+
+</div>
+
+---
+
+<div align="center">
+
+```
+✦ ✦ ✦ ✦ ✦  
+AI‑CHAIN RFOF‑GOLDEN‑CHAIN  
+✦ ✦ ✦ ✦ ✦
+```
+
+</div>
+
+---
+
+<!-- BUTTON LEISTE -->
+<div align="center">
+
+⭐ **Stars:**  
+<img src="https://img.shields.io/github/stars/RFOF-NETWORK/ai-chain?style=flat-square&color=FFD700" alt="Stars">
+
+🔱 **Forks:**  
+<img src="https://img.shields.io/github/forks/RFOF-NETWORK/ai-chain?style=flat-square&color=7FDBFF" alt="Forks">
+
+👁️ **Watchers:**  
+<img src="https://img.shields.io/github/watchers/RFOF-NETWORK/ai-chain?style=flat-square&color=00FFFF" alt="Watchers">
+
+🐞 **Bug Reports (Issues):**  
+<img src="https://img.shields.io/github/issues/RFOF-NETWORK/ai-chain?style=flat-square&color=8A0303" alt="Issues">
+
+🧩 **Pull Requests:**  
+<img src="https://img.shields.io/github/issues-pr/RFOF-NETWORK/ai-chain?style=flat-square&color=39FF14" alt="Pull Requests">
+
+👤 **Contributors:**  
+<img src="https://img.shields.io/github/contributors/RFOF-NETWORK/ai-chain?style=flat-square&color=9400D3" alt="Contributors">
+
+</div>
+
+---
+
+<div align="center">
+
+```
+ █████╗  ██╗   ██████╗ ██╗  ██╗ █████╗ ██╗███╗   ██╗
+██╔══██╗ ██║  ██╔════╝██║  ██║██╔══██╗██║████╗  ██║
+███████║ ██║  ██║     ███████║███████║██║██╔██╗ ██║
+██╔══██║ ██║  ██║     ██╔══██║██╔══██║██║██║╚██╗██║
+██║  ██║ ██║  ╚██████╗██║  ██║██║  ██║██║██║ ╚████║
+╚═╝  ╚═╝ ╚═╝   ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝
+```
+
+</div>
+      
+---
+
+<div align="center">
+  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+**✦ GOLDENCHAIN SOVEREIGN LAYER ✦**  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+
+</div>
+
+---
+
+<div align="center">
+
+| System | Status | Beschreibung |
+|--------|--------|--------------|
+| **VMCore** | ⚙️ Aktiv | Deterministische Ausführungslogik |
+| **VC‑Layer** | 🔮 Lebendig | Souveräne mechatronische Logik |
+| **BOxChain** | 📦 Stabil | Containerisierte Block‑Struktur |
+| **GoldenChain** | ✨ Strahlend | Blockchain‑Komponente der RFOF‑BOxChain |
+
+</div>
+
+---
+
+<div align="center">
+
+🔷 **CRYSTAL STATE PHILOSOPHY**  
+Deterministic • Reproducible • Sovereign • Pure
+
+</div>
+
+---
+
+<div align="center">
+
+🜁 🜂 🜃 🜄  
+**VC‑MECHATRONICS — THE SOVEREIGN ENGINE**  
+🜁 🜂 🜃 🜄
+
+</div>
+
+---
+
+<div align="center">
+      
+## ✦ ✦ ✦ ARCHITECTURE ✦ ✦ ✦
+
+
+## ➤➤➤ STATE PHILOSOPHY ➤➤➤
+
+
+## ✧ VC‑MECHATRONICS ✧
+
+</div>
+
+---
+
+<div align="center">
+      
+> ✦ *„Souveränität ist kein Zustand — sie ist ein Prozess.“*  
+> — AI‑Chain Principle
+
+</div>
+
+**AI‑Chain** ist eine souveräne, deterministische, auditierbare Blockchain‑Umgebung, die aus der
 RFOF‑BOxChain‑Architektur hervorgeht und GoldenChain als interne Blockchain‑Komponente integriert.
 Durch die Kombination entsteht RFOF‑GOLDEN: ein 0ms‑logikbasiertes, modular aufgebautes,
 interdisziplinäres System, in dem Blöcke in BOxen und BOxen in Blöcken existieren.
 
-Dieses Repository enthält:
+### Dieses Repository enthält:
 
 - die vollständige VM‑Architektur (vm_core, blockchain, fees, liquidity, wallet, viewer)
 - die Token‑Module (AI, COIN, AIC‑LP)
@@ -21,7 +183,7 @@ Diese Master‑README.md fasst alles zusammen.
 
 ---
 
-1. Architekturüberblick
+### 1. Architekturüberblick
 
 ```
 ai_chain/
@@ -48,7 +210,7 @@ ai_chain/
 
 ---
 
-2. VM‑Kontext (vm.VC)
+### 2. VM‑Kontext (vm.VC)
 
 ```
 vm.VC
@@ -85,9 +247,9 @@ vm.VC
 
 ---
 
-3. ECCU‑System (VC.ecc + vceccu.py + eccufond.py)
+### 3. ECCU‑System (VC.ecc + vceccu.py + eccufond.py)
 
-Komponenten:
+**Komponenten:**
 
 - VC.ecc  
   Fee‑Split 45/42/10/3  
@@ -109,9 +271,9 @@ Komponenten:
 
 ---
 
-4. API‑Schichten
+### 4. API‑Schichten
 
-Interne API (für vm.VC)
+**Interne API (für vm.VC)**
 
 - deposit  
 - withdraw  
@@ -119,7 +281,7 @@ Interne API (für vm.VC)
 - sync  
 - portfolio  
 
-Externe API (für UI)
+**Externe API (für UI)**
 
 - server.py  
 - main.py  
@@ -128,14 +290,14 @@ Externe API (für UI)
 
 ---
 
-5. UI
+### 5. UI
 
 - index.html  
 - scripts/ui.js  
 - scripts/charts.js  
 - styles.css  
 
-UI zeigt:
+**UI zeigt:**
 
 - Portfolio  
 - Liquidity  
@@ -147,7 +309,7 @@ UI zeigt:
 
 ---
 
-6. Datenhaltung
+### 6. Datenhaltung
 
 - chain.json  
 - users.json  
@@ -155,15 +317,15 @@ UI zeigt:
 
 ---
 
-7. Lizenz
+### 7. Lizenz
 
-VC.ecc definiert die LICENSE‑Metadaten für Blöcke.
+***VC.ecc definiert die LICENSE‑Metadaten für Blöcke.***
 
 ---
 
-8. Unterordner‑README.md
+### 8. Unterordner‑README.md
 
-Jeder Ordner enthält eine kurze README.md mit:
+**Jeder Ordner enthält eine kurze README.md mit:**
 
 - Zweck  
 - Dateien  
