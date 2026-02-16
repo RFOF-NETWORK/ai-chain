@@ -25,7 +25,7 @@ class AIChain:
     def __init__(self):
         # SOVEREIGN ADMIN DATA (DEINE IDENTITÄT)
         self.admin_address = "1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ"
-        self.genesis_ap_hash = "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541"
+        self.genesis_hash = "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541"
         self.genesis_validation_ap_hash = "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b"
         
         # Startet die Kette mit dem versiegelten Genesis-Block
@@ -38,7 +38,7 @@ class AIChain:
             "genesis": True,
             "owner": "RFOF-NETWORK",
             "address": self.admin_address,
-            "ap_hash": self.genesis_ap_hash,
+            "hash": self.genesis_hash,
             "validation_ap_hash": self.genesis_validation_ap_hash,
             "license": "PZQQET-VC-ECC-2020",
             "ranking": 0  # Admin ist immer Rang 0
