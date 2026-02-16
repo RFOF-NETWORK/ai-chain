@@ -1,7 +1,7 @@
 {
   "admin_username": "RFOF-NETWORK",
   "admin_address": "1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ",
-  "genesis_ap_hash": "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541",
+  "genesis_hash": "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541",
   "genesis_validation_ap_hash": "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b",
   "role": "GENESIS_OWNER",
   "is_admin": true
