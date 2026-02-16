@@ -44,5 +44,6 @@ def get_admin_info() -> Dict[str, str]:
         "admin_username": cfg.get("admin_username", ""),
         "admin_address": cfg.get("admin_address", ""),
         "role": cfg.get("role", "GENESIS_OWNER"),
+        "validation_ap_hash": cfg.get("validation_ap_hash"),
         "is_admin": cfg.get("is_admin", True)
     }
