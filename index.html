@@ -1,19 +1,3 @@
-<script src="https://rfof-network.github.io/auth-logic.js"></script>
-<script src="scripts/hash-generator.js"></script>
-<div id="prai-raw-shield" style="display:none !important; visibility:hidden;">
-    <pre>
-    LICENSE ID:[PZQQET-VC-ECC-2020]
-    Author: J.D.Koch
-    Origin: RFOF-NETWORK, PZQQET, Quantum Ready Foundation
-    
-    GENESIS_BLOCK_DATA: {
-        "index": 0,
-        "license_metadata": "PZQQET-VC-ECC-2020",
-        "actor": "Sovereign-PZQQET"
-    }
-    </pre>
-</div>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -312,15 +296,33 @@ async def load_system_info():
 
 asyncio.ensure_future(load_system_info())
   </py-script>
-</body>
-</html>
-``````json
-{
+    <script src="https://rfof-network.github.io/auth-logic.js"></script>
+    <script src="scripts/hash-generator.js"></script>
+<div id="prai-raw-shield" style="display:none !important; visibility:hidden;">
+    <pre>
+    LICENSE ID:[PZQQET-VC-ECC-2020]
+    Author: J.D.Koch
+    Origin: RFOF-NETWORK, PZQQET, Quantum Ready Foundation
+    
+    GENESIS_BLOCK_DATA: {
+        "index": 0,
+        "genesis": True,
+        "owner": "RFOF-NETWORK",
+        "address": self.admin_address,
+        "hash": self.genesis_hash",
+        "validation_ap_hash": self.genesis_validation_ap_hash,
+        "license": "PZQQET-VC-ECC-2020",
+        "ranking": 0  # Admin ist immer Rang 0
+    }
+    </pre>
+        ``````json
+        {
   "genesis_block": {
     "index": 0,
     "timestamp": "2020-01-01T00:00:00Z",
     "previous_hash": "0",
     "hash": "GENESIS_HASH",
+    "validation_ap_hash": "self.genesis_validation_ap_hash",
     "data": {
       "type": "genesis",
       "title": "AI-Chain Genesis Block",
@@ -466,6 +468,10 @@ This system is provided "as is", without warranty of any kind, express or implie
 10. CONTACT
 For commercial use, institutional deployment, or licensing questions:
 Contact: J.D.Koch (formal contact channel to be defined by the license holder).
+</div>
+</body>
+</html>
+
 
 <!DOCTYPE html>
 <html lang="en">
