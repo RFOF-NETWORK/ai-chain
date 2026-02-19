@@ -1825,3 +1825,496 @@ Weil ich folgendes gebaut habe:
 ✔ AI/COIN immer durch Energie gedeckt
 
 Das ist echte Ökonomie, nicht Blockchain‑Spekulation.
+---
+# ⭐ 1. GENESIS – Die korrigierte energetische Basis
+
+Energie‑Wertanker (notariell, unveränderlich)
+- 1 TB = 1,25 €
+- 1 AI = 1 TB = 1,25 €
+- 1 COIN = 1 TB = 1,25 €
+- 1 AIC‑LP = 2 TB = 2,50 €
+- 1 ECCU = 2 TB = 2,50 €
+- 0,5 ECCU = 1 TB = 1,25 €
+
+Token‑Supply bei Genesis:
+- AI = 0  
+- COIN = 0  
+- AIC‑LP = 0  
+- ECCU = 0  
+
+Wertanker:
+- Energie = fix  
+- Preis = fix  
+- Interaktion = 0  
+- SAFE = 0  
+- OWNER = 0  
+- FOND = 0  
+- SYSTEM = 0  
+
+---
+
+# ⭐ 2. ROUNDTRIP – Die wichtigste Einheit meiner Chain
+
+Ein Roundtrip besteht aus:
+
+1. COIN → AI (Swap 1)
+- AI‑Preis steigt um 0,2 %
+
+2. AI → COIN (Swap 2)
+- COIN‑Preis steigt um 0,2 %
+
+3. AIC‑LP
+- steigt um 0,4 %  
+  (weil beide Token im Pool teurer werden)
+
+4. Fees
+- 45 % SAFE  
+- 42 % OWNER  
+- 10 % FOND  
+- 3 % SYSTEM  
+
+5. Mining
+- User erhält AI oder COIN im Wert von 1,25 € pro TB  
+- Admin erhält 0,5 ECCU pro TB (1,25 €)
+
+---
+
+# ⭐ 3. ALLE SCHICHTEN (100 %) – Die vollständige Aufteilung
+
+A) Interaktions‑Schicht (100 %)
+- 0,2 % Preissteigerung pro Token‑Transfer  
+- 2 Transfers pro Roundtrip  
+- 0,4 % Preissteigerung für AIC‑LP  
+
+B) Fee‑Schicht (100 %)
+VC.ecc teilt:
+
+| Anteil | Zweck |
+|-------|-------|
+| 45 % SAFE | Energie‑Wertanker |
+| 42 % OWNER | Unternehmenswert |
+| 10 % FOND | NAV‑Wert |
+| 3 % SYSTEM | Betrieb |
+
+C) Energie‑Schicht (100 %)
+- 0,5 ECCU pro TB  
+- 1 TB = 1,25 €  
+- User erhält AI/COIN  
+- Admin erhält ECCU  
+
+D) Preis‑Schicht (100 %)
+- AI: Energie + Interaktion  
+- COIN: Energie + Interaktion  
+- AIC‑LP: Energie + Interaktion × 2  
+- ECCU: Energie ONLY (immer 2,50 €)
+
+E) Wert‑Schicht (100 %)
+- SAFE = Fundament  
+- OWNER = Unternehmenswert  
+- FOND = NAV  
+- SYSTEM = Betrieb  
+- ECCU = Anleihe  
+- AI/COIN = Utility/Credit  
+- AIC‑LP = Liquidität  
+
+---
+
+# ⭐ 4. WIE SICH DER PREIS AB GENESIS BILDET
+
+AI‑Preis:
+\[
+AI_n = 1{,}25 \cdot (1{,}002)^n
+\]
+
+COIN‑Preis:
+\[
+COIN_n = 1{,}25 \cdot (1{,}002)^n
+\]
+
+AIC‑LP‑Preis:
+\[
+AIC_n = 2{,}50 \cdot (1{,}004)^n
+\]
+
+ECCU‑Preis:
+\[
+ECCU = 2{,}50\ €\ (\text{immer})
+\]
+
+---
+
+# ⭐ 5. MINING – Die Energie‑Schicht
+
+Pro TB:
+- User erhält:  
+  → AI oder COIN im Wert von 1,25 €  
+- Admin erhält:  
+  → 0,5 ECCU (1,25 €)  
+
+Token‑Menge sinkt:
+\[
+AI\pro\TB(n) = \frac{1{,}25}{AI_n}
+\]
+
+\[
+COIN\pro\TB(n) = \frac{1{,}25}{COIN_n}
+\]
+
+€‑Wert bleibt konstant:
+\[
+Wert\pro\TB = 1{,}25\ €
+\]
+
+---
+
+# ⭐ 6. SAFE – Die wichtigste Schicht
+
+SAFE erhält 45 % aller Fees.
+
+SAFE ist:
+
+- Energie‑Wertanker  
+- Fundament  
+- Deckung für ECCU (20 %)  
+- nicht auszahlbar  
+- nicht handelbar  
+- nicht manipulierbar  
+- wächst nur durch echte Interaktion  
+
+ECCU‑Deckung:
+\[
+ECCU_{20\%} = SAFE \cdot 0{,}2
+\]
+
+---
+
+# ⭐ 7. OWNER – Die Unternehmens‑Schicht
+
+OWNER erhält 42 % aller Fees.
+
+OWNER ist:
+
+- Unternehmenswert  
+- Admin‑Vermögen  
+- Grundlage für Investoren  
+- Grundlage für Anleihen  
+
+---
+
+# ⭐ 8. FOND – Die NAV‑Schicht
+
+FOND erhält 10 % aller Fees.
+
+FOND ist:
+
+- NAV‑Wert  
+- Basis für LP‑Wert  
+- Basis für Preisstabilität  
+
+---
+
+# ⭐ 9. SYSTEM – Die Betriebs‑Schicht
+
+SYSTEM erhält 3 % aller Fees.
+
+SYSTEM ist:
+
+- Betrieb  
+- Infrastruktur  
+- VM‑Kosten  
+- API‑Kosten  
+
+---
+
+# ⭐ 10. USER – Die Nutzer‑Schicht
+
+User können:
+
+- AI kaufen  
+- COIN kaufen  
+- AI/COIN minen  
+- AI/COIN swappen  
+- LP hinzufügen  
+- LP entfernen  
+- Wert erzeugen durch Interaktion  
+
+User können NICHT:
+
+- ECCU besitzen  
+- SAFE beeinflussen  
+- OWNER beeinflussen  
+
+---
+
+# ⭐ 11. ADMIN – Die Souveränitäts‑Schicht
+
+Admin kann:
+
+- ECCU ausgeben (20 % SAFE)  
+- ECCU als Anleihe nutzen  
+- OWNER‑Wert nutzen  
+- System steuern  
+- Genesis kontrollieren  
+
+Admin kann NICHT:
+
+- SAFE entnehmen  
+- Preise manipulieren  
+- Interaktionen fälschen  
+
+---
+
+# ⭐ 12. DIE GESAMTHEIT – ALLE SICHTEN IN EINEM SATZ
+
+Jede Interaktion erzeugt Energie‑Wert (SAFE), Unternehmens‑Wert (OWNER), NAV‑Wert (FOND), System‑Wert (SYSTEM), Preissteigerung (AI/COIN/AIC), Mining‑Belohnung (AI/COIN), Energie‑Einheiten (ECCU), und ermöglicht dem Admin souveräne Anleihen, während User durch Energie und Interaktion Wert erzeugen, ohne jemals ECCU besitzen zu können.
+
+---
+
+# 🟦 1. ADMIN‑SCHICHT (Souveränität der Identität)
+Die Admin‑Schicht ist die persönliche, souveräne Identität des Erfinders.
+
+Justin Koch (@ Satoramy owner & inventers of the @ RFOF-NETWORK)— die einzige notarisch verankerte Identität, die:
+
+- die Chain erschaffen hat  
+- die Energie‑Lizenz besitzt  
+- die ECCU‑Einheiten kontrolliert  
+- die Genesis‑Werte definiert  
+- die 0,2‑Deterministik gesetzt hat  
+- die SAFE‑Deckung nutzen darf  
+- die Unternehmens‑Anleihen ausgeben darf  
+
+🔹 Admin besitzt:
+- 42 % OWNER‑Wert (Unternehmensanteil)  
+- ECCU‑Balance (20 % SAFE‑Deckung)  
+- Kontrolle über Genesis‑Hash  
+- Kontrolle über Energie‑Lizenz  
+- Kontrolle über ECCU‑Minting  
+- Kontrolle über Unternehmens‑Anleihen  
+- Kontrolle über System‑Parameter  
+
+🔹 Admin besitzt NICHT:
+- SAFE (niemals auszahlbar)  
+- FOND (NAV gehört dem System)  
+- SYSTEM‑Fee (geht in Betrieb)  
+
+🔹 Admin‑Rechte:
+- ECCU ausgeben (20 % SAFE)  
+- ECCU als Anleihe nutzen  
+- OWNER‑Wert nutzen  
+- Governance‑Entscheidungen treffen  
+- Energie‑Lizenz erneuern  
+- Genesis‑Werte schützen  
+
+🔹 Admin‑Pflichten:
+- Souveränität bewahren  
+- Energie‑Lizenz jährlich erneuern  
+- Interoperabilität garantieren  
+- System‑Integrität schützen  
+
+---
+
+# 🟩 2. UNTERNEHMENS‑SCHICHT (Souveränität der Institution)
+Die Unternehmens‑Schicht ist die souveräne juristische Person: AI‑Chain / RFOF‑GOLD.
+
+Diese Schicht ist nicht du persönlich, sondern:
+
+- das Unternehmen  
+- die juristische Entität  
+- der Energie‑Wertträger  
+- der Emittent der Anleihen  
+- der Besitzer des SAFE  
+- der Besitzer des FOND  
+- der Besitzer des SYSTEM‑Wertes  
+
+🔹 Unternehmen besitzt:
+- SAFE (45 %)  
+- OWNER‑Wert (42 %)  
+- FOND‑Wert (10 %)  
+- SYSTEM‑Wert (3 %)  
+- AIC‑LP‑Wert  
+- AI/COIN‑Preissteigerung  
+- Energie‑Wertanker  
+- NAV‑Wachstum  
+
+🔹 Unternehmen besitzt NICHT:
+- ECCU‑Balance (die gehört dem Admin)  
+- User‑Token  
+- User‑Energie  
+
+🔹 Unternehmens‑Rechte:
+- SAFE halten  
+- FOND verwalten  
+- SYSTEM‑Fee nutzen  
+- NAV berechnen  
+- Preissteigerung erzeugen  
+- Energie‑Wertanker halten  
+
+🔹 Unternehmens‑Pflichten:
+- Energie‑Deckung garantieren  
+- Interaktion deterministisch verarbeiten  
+- VC.ecc korrekt ausführen  
+- Mining‑Belohnungen korrekt auszahlen  
+- Preissteigerung korrekt anwenden  
+
+---
+
+# 🟧 3. WARUM ADMIN ≠ UNTERNEHMEN
+Weil du ein souveränes System gebaut hast.
+
+ADMIN ist:
+- die einzige natürliche Person  
+- die einzige ECCU‑Instanz  
+- die einzige Anleihe‑Instanz  
+- die einzige Genesis‑Instanz  
+
+UNTERNEHMEN ist:
+- die juristische Person  
+- der Wertträger  
+- der Energie‑Anker  
+- der Preis‑Motor  
+
+Diese Trennung ist notwendig, damit:
+
+- das Unternehmen souverän bleibt  
+- der Admin souverän bleibt  
+- ECCU nicht inflationiert  
+- SAFE nicht angegriffen werden kann  
+- Preissteigerung deterministisch bleibt  
+- Energie‑Lizenz geschützt bleibt  
+
+---
+
+# 🟥 4. ALLE PROZENTE (100 %) — jetzt sauber getrennt nach Schichten
+
+A) Interaktions‑Schicht (100 %)
+- 0,2 % Preissteigerung pro Token‑Transfer  
+- 0,4 % Preissteigerung für AIC‑LP  
+
+B) Energie‑Schicht (100 %)
+- 0,5 ECCU pro TB (Admin)  
+- 1,25 € Mining‑Wert (User)  
+
+C) Fee‑Schicht (100 %)
+- 45 % SAFE → Unternehmen  
+- 42 % OWNER → Unternehmen (Admin besitzt Anteil)  
+- 10 % FOND → Unternehmen  
+- 3 % SYSTEM → Unternehmen  
+
+D) Preis‑Schicht (100 %)
+- AI: Energie + Interaktion  
+- COIN: Energie + Interaktion  
+- AIC‑LP: Energie + Interaktion × 2  
+- ECCU: Energie ONLY  
+
+E) Wert‑Schicht (100 %)
+- SAFE = 45 %  
+- OWNER = 42 %  
+- FOND = 10 %  
+- SYSTEM = 3 %  
+
+---
+
+# 🟪 5. WIE SICH DER PREIS BILDET (ab Genesis = 1,25 €)
+
+AI‑Preis:
+\[
+AI_n = 1{,}25 \cdot (1{,}002)^n
+\]
+
+COIN‑Preis:
+\[
+COIN_n = 1{,}25 \cdot (1{,}002)^n
+\]
+
+AIC‑LP‑Preis:
+\[
+AIC_n = 2{,}50 \cdot (1{,}004)^n
+\]
+
+ECCU‑Preis:
+\[
+ECCU = 2{,}50\ €
+\]
+
+---
+
+# 🟫 6. MÖGLICHKEITEN DES ADMIN (Souveränität)
+
+Admin kann:
+- ECCU ausgeben (20 % SAFE)  
+- ECCU als Anleihe nutzen  
+- OWNER‑Wert nutzen  
+- Genesis schützen  
+- Energie‑Lizenz erneuern  
+- System‑Parameter setzen  
+
+Admin kann NICHT:
+- SAFE entnehmen  
+- FOND entnehmen  
+- SYSTEM entnehmen  
+- Preise manipulieren  
+
+---
+
+# 🟩 7. MÖGLICHKEITEN DES UNTERNEHMENS (Souveränität)
+
+Unternehmen kann:
+- SAFE halten  
+- FOND verwalten  
+- SYSTEM‑Fee nutzen  
+- NAV berechnen  
+- Preissteigerung erzeugen  
+- Energie‑Wertanker halten  
+
+Unternehmen kann NICHT:
+- ECCU besitzen  
+- ECCU ausgeben  
+- Admin‑Werte verändern  
+
+---
+
+# 🟦 8. MÖGLICHKEITEN DER USER
+
+User können:
+
+- AI kaufen  
+- COIN kaufen  
+- AI/COIN minen  
+- AI/COIN swappen  
+- LP hinzufügen  
+- LP entfernen  
+- Wert erzeugen durch Interaktion  
+
+User können NICHT:
+
+- ECCU besitzen  
+- SAFE beeinflussen  
+- OWNER beeinflussen  
+
+---
+
+# ⭐ FAZIT — Die perfekte Trennung
+
+ADMIN = Souveränität der Person
+- ECCU  
+- Anleihen  
+- Genesis  
+- Energie‑Lizenz  
+- 20 % SAFE‑Deckung  
+
+UNTERNEHMEN = Souveränität der Institution
+- SAFE  
+- OWNER  
+- FOND  
+- SYSTEM  
+- Preissteigerung  
+- Energie‑Wertanker  
+
+Diese Trennung macht meine AI‑Chain:
+
+- souverän  
+- energiegebunden  
+- deterministisch  
+- unabhängig  
+- rechtlich sauber  
+- wirtschaftlich stabil
