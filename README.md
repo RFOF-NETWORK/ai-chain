@@ -162,6 +162,120 @@ Deterministic • Reproducible • Sovereign • Pure
 
 </div>
 
+---
+
+
+/ai-chain (Root)
+│
+├── index.html                   # Haupt-UI (Pfade: scripts/ui.js, styles.css)
+├── styles.css                   # Globales Design
+├── auth-logic.js                # JS-Auth-Layer
+├── ai-chain.py                  # PZQQET Haupt-Logik
+├── main.py                      # System-Einstieg
+├── ai_token.py                  # AI Token Logik
+├── coin_token.py                # Coin Token Logik
+├── aic_lp_token.py              # Liquidity-Pool Token
+├── smartcontracts.py            # Vertrags-Engine
+├── block.json                   # Genesis/Block-Daten
+├── vm.VC                        # VM-Konfiguration
+├── VC.ecc                       # Kern-Modul Root-Ebene (ECCU)
+├── admin-rules.py               # Administrative Regelwerke
+├── ARCHITECTURE.md              # System-Architektur
+├── CHANGELOG.md                 # Versionshistorie
+├── CODE_OF_CONDUCT.md           # Verhaltenscodex
+├── CONTRIBUTING.py              # Mitwirkungs-Logik
+├── GOVERNANCE.md                # Governance-Struktur
+├── LANGUAGE.md                  # Sprach-Definitionen
+├── LICENSE                      # Lizenz
+├── README.md                    # Projekt-Dokumentation
+├── SECURITY.md                  # Sicherheits-Richtlinien
+├── STATE-PHILOSOPHY.md          # Ideologisches Fundament
+├── SUPPORT.md                   # Support-Anlaufstellen
+├── VC-MECHATRONICS.md           # Mechatronik-Schnittstellen
+└── WHITEPAPER.md                # Strategisches Manifest 2029
+│
+├── 📂 scripts/                  # FRONTEND LOGIK
+│   ├── ui.js                    # Zentrale UI-Steuerung
+│   ├── charts.js                # Daten-Visualisierung
+│   ├── hash-generator.js        # Client-Kryptographie
+│   ├── login.js                 # Login-UI
+│   ├── register.js              # Register-UI
+│   ├── admin.js                 # Admin-Tools
+│   ├── banking.js               # Banking-Features
+│   ├── dex.js                   # DEX-Interface
+│   └── README.md                # UI Logic Layer Dokumentation
+│
+├── 📂 core/                     # SYSTEM-KERN (PRAI)
+│   ├── vm_core.py               # VM-Orchestrierung
+│   ├── blockchain.py            # Block-Validierung
+│   ├── fees.py                  # PZQQET Fee-Split (45/42/10/3)
+│   ├── hash-generator.py        # Server-Hashing
+│   ├── wallet-adress-generator.py # Adress-Erzeugung
+│   ├── admin.py                 # Admin-Backend
+│   ├── banking.py               # Banking-Backend
+│   ├── dex.py                   # DEX-Backend
+│   ├── login.py                 # Auth-Backend
+│   ├── logout.py                # Session-Ende
+│   ├── register.py              # Registrierung
+│   ├── security.py              # System-Sicherheit
+│   └── README.md                # VM Core Layer Dokumentation
+│
+├── 📂 api/                      # SCHNITTSTELLEN
+│   ├── 📂 blocks/
+│   │    ├── index.html
+│   ├── server.py                # HTTP-Host
+│   ├── main.py                  # API-Einstieg
+│   ├── sync.py                  # Chain-Sync
+│   ├── marketprice.py           # Preis-Orakel
+│   ├── deposit.py               # Einzahlungen
+│   ├── withdraw.py              # Auszahlungen
+│   ├── swap.py                  # Token-Tausch
+│   ├── wallet_api.py            # Wallet-Schnittstelle
+│   ├── login.py / logout.py     # Auth-API
+│   ├── register.py              # User-API
+│   └── README.md                # API Layer Dokumentation
+│
+├── 📂 data/                     # PERSISTENZ
+│   ├── chain.json               # Blockchain-State
+│   ├── users.json               # User-Datenbank
+│   ├── settings.json            # System-Settings
+│   ├── admin.json               # Admin-States
+│   ├── banking.json             # Banking-States
+│   ├── dex.json                 # DEX-States
+│   └── README.md                # Persistent State Dokumentation
+│
+├── 📂 wallet/                   # WALLET SYSTEM
+│   ├── wallet_system.py         # Zentrales Wallet-Modul
+│   └── README.md                # Wallet Layer Dokumentation
+│
+├── 📂 viewer/                   # LESE-LOGIK
+│   ├── chain_viewer.py          # Explorer-Logik
+│   ├── portfolio_viewer.py      # Portfolio-Logik
+│   └── README.md                # Viewer Layer Dokumentation
+│
+├── 📂 ECCU/                     # ÖKONOMIE
+│   ├── vc_eccu.py               # VM-Adapter
+│   ├── eccu_fond.py             # Fonds-Logik
+│   ├── LICENSE                  # ECCU-Lizenz
+│   └── README.md                # ECCU Dokumentation
+│
+├── 📂 liquidity/                # LIQUIDITÄT
+│   └── README.md                # Pool-Dokumentation
+│
+├── 📂 documentation/            # EXTRA DOCS
+│   └── WHITEPAPER.md            # Manifest
+│
+└── 📂 .github/                  # REPO MANAGEMENT
+    ├── CODEOWNERS               #
+    ├── FUNDING.yml              #
+    ├── PULL_REQUEST_TEMPLATE.md #
+    └── 📂 ISSUE_TEMPLATE/       #
+        ├── bug_report.md        #
+        └── future_request.md    #
+
+
+---
+
 **AI‑Chain** ist eine souveräne, deterministische, auditierbare Blockchain‑Umgebung, die aus der
 RFOF‑BOxChain‑Architektur hervorgeht und GoldenChain als interne Blockchain‑Komponente integriert.
 Durch die Kombination entsteht RFOF‑GOLDEN: ein 0ms‑logikbasiertes, modular aufgebautes,
