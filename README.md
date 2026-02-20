@@ -163,7 +163,7 @@ Deterministic • Reproducible • Sovereign • Pure
 </div>
 
 ---
-
+```
 
 /ai-chain (Root)
 │
@@ -273,7 +273,7 @@ Deterministic • Reproducible • Sovereign • Pure
         ├── bug_report.md        #
         └── future_request.md    #
 
-
+```
 ---
 
 **AI‑Chain** ist eine souveräne, deterministische, auditierbare Blockchain‑Umgebung, die aus der
