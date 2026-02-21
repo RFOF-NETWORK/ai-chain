@@ -169,7 +169,6 @@ Deterministic • Reproducible • Sovereign • Pure
 │
 ├── index.html                   # Haupt-UI (Pfade: scripts/ui.js, styles.css)
 ├── styles.css                   # Globales Design
-├── auth-logic.js                # JS-Auth-Layer
 ├── ai-chain.py                  # PZQQET Haupt-Logik
 ├── main.py                      # System-Einstieg
 ├── ai_token.py                  # AI Token Logik
@@ -203,6 +202,7 @@ Deterministic • Reproducible • Sovereign • Pure
 │   ├── admin.js                 # Admin-Tools
 │   ├── banking.js               # Banking-Features
 │   ├── dex.js                   # DEX-Interface
+│   ├── auth-logic.js                # JS-Auth-Layer
 │   └── README.md                # UI Logic Layer Dokumentation
 │
 ├── 📂 core/                     # SYSTEM-KERN (PRAI)
