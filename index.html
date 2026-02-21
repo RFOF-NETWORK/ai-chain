@@ -211,6 +211,7 @@
 from js import document, console, fetch
 import json
 import asyncio
+import hashlib
 
 # -----------------------------
 # Helper: fetch JSON from API
@@ -354,8 +355,6 @@ asyncio.ensure_future(load_system_info())
 # -----------------------------
 # phrasen: wallet & settings create/login admin/user
 # -----------------------------
-# --- Phrase-System Logik ---
-
 def open_phrase_modal(event):
     """Erstellt das Raster und öffnet das Modal-Fenster."""
     username = document.getElementById("login-username").value
@@ -365,9 +364,9 @@ def open_phrase_modal(event):
     
     modal = document.getElementById("phrase-modal")
     grid = document.getElementById("phrase-grid")
-    grid.innerHTML = ""  # Grid leeren
+    grid.innerHTML = ""  
     
-    # Dynamische Anzahl: Admin = 48, User = 24
+    # Admin bekommt 48 Felder, normale User 24 🧩
     phrase_count = 48 if username.lower() == "admin" else 24
     
     for i in range(1, phrase_count + 1):
@@ -385,23 +384,38 @@ def open_phrase_modal(event):
     modal.classList.remove("hidden")
 
 def submit_phrase(event):
-    """Liest alle Wörter aus und fügt sie zusammen."""
+    """Liest Wörter aus, hasht sie doppelt und validiert gegen die Chain."""
     grid = document.getElementById("phrase-grid")
     inputs = grid.getElementsByTagName("input")
     
-    phrase_list = []
-    for i in range(inputs.length):
-        word = inputs.item(i).value.strip()
-        if word:
-            phrase_list.append(word)
-    
+    # 1. Wörter einsammeln und normalisieren 🧹
+    phrase_list = [inputs.item(i).value.strip().lower() for i in range(inputs.length)]
     full_phrase = " ".join(phrase_list)
     
-    # Hier wird die Phrase für die Blockchain/API bereitgestellt
-    console.log("Phrase erfolgreich zusammengesetzt.")
-    # Beispiel für die Weiterverarbeitung:
-    # login_with_phrase(full_phrase) 
+    if not full_phrase:
+        console.log("Fehler: Keine Phrase eingegeben.")
+        return
 
-# --- Event-Binding (Wichtig: Ganz links einrücken!) ---
+    # 2. Double SHA-256 Hashing (RFOF-Standard) 🔐🔐
+    # Erster Durchgang
+    first_pass = hashlib.sha256(full_phrase.encode("utf-8")).digest()
+    # Zweiter Durchgang (Hex-Output)
+    final_hash = hashlib.sha256(first_pass).hexdigest()
+    
+    # 3. Validierung gegen den Genesis-Admin-Hash 🏆
+    # Das ist der Wert aus deiner blockchain.py
+    admin_target = "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b"
+    
+    if final_hash == admin_target:
+        console.log("✅ Validierung erfolgreich! Zugriff auf Admin-Wallet gewährt.")
+        # Modal schließen und Wallet anzeigen
+        document.getElementById("phrase-modal").classList.add("hidden")
+        # Hier rufen wir die Funktion auf, um die Wallet-Sektion zu zeigen
+        # (Stelle sicher, dass showSection im JS-Teil definiert ist)
+    else:
+        console.log("❌ Validierung fehlgeschlagen. Der Hash stimmt nicht überein.")
+        # Hier könnten wir dem User einen visuellen Hinweis geben ⚠️
+
+# --- Event-Binding ---
 document.getElementById("btn-phrase-login").onclick = open_phrase_modal
 document.getElementById("btn-submit-phrase").onclick = submit_phrase
