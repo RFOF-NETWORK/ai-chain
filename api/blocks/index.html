@@ -294,8 +294,22 @@ async def load_system_info():
 asyncio.ensure_future(load_system_info())
   </py-script>
   <div style="display: none !important; visibility: hidden; height: 0; width: 0; overflow: hidden;">
-  <py-config>
+    <py-config>
     packages = ["matplotlib", "numpy"]
+    [[fetch]]
+    # Hier binden wir deine Core-Logik und alle Frontend-Scripts ein
+    files = [
+      "ai-chain.py", 
+      "auth-logic.js",
+      "scripts/ui.js", 
+      "scripts/charts.js", 
+      "scripts/hash-generator.js", 
+      "scripts/login.js", 
+      "scripts/register.js", 
+      "scripts/admin.js", 
+      "scripts/banking.js", 
+      "scripts/dex.js"
+    ]
   </py-config>
 </div>
 <py-script>
@@ -311,11 +325,11 @@ asyncio.ensure_future(load_system_info())
         "index": 0,
         "genesis": True,
         "owner": "RFOF-NETWORK",
-        "address": self.admin_address,
-        "hash": self.genesis_hash",
-        "validation_ap_hash": self.genesis_validation_ap_hash,
+        "address": "1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ", # Deine feste Adresse
+        "hash": "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541",
+        "validation_ap_hash": "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b",
         "license": "PZQQET-VC-ECC-2020",
-        "ranking": 0  # Admin ist immer Rang 0
+        "ranking": 0  # Admin-Rang
     }
     </pre>
         ``````json
