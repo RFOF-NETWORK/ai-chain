@@ -23,6 +23,20 @@
   </style>
   <py-config>
     packages = ["matplotlib", "numpy"]
+    [[fetch]]
+    # Hier binden wir deine Core-Logik und alle Frontend-Scripts ein
+    files = [
+      "ai-chain.py", 
+      "auth-logic.js",
+      "scripts/ui.js", 
+      "scripts/charts.js", 
+      "scripts/hash-generator.js", 
+      "scripts/login.js", 
+      "scripts/register.js", 
+      "scripts/admin.js", 
+      "scripts/banking.js", 
+      "scripts/dex.js"
+    ]
   </py-config>
 </head>
 <body>
