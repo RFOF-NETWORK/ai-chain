@@ -17,41 +17,58 @@ from typing import Any, Dict, Optional
 import hashlib
 import json
 import time
-from js import console, document, showSection # PyScript Bridge
-from core.vm_core import vm_core
+from js import console, document, showSection 
+from core.blockchain import rfof_chain # Zugriff auf die neue Core-Logik
 
 # -------------------------------------------------------------------------
-# PHRASEN SYSTEM LOGIK
+# 48-WÖRTER SYSTEM LOGIK (Deterministisch)
 # -------------------------------------------------------------------------
+
+def generate_rfof_phrases(username: str, password: str) -> Dict[str, Any]:
+    """
+    Erzeugt aus Username und Passwort die 48-Wörter-Struktur.
+    Teil A (24): Sichtbar im Pop-up.
+    Teil B (24): Unsichtbar, versiegelt die Identität.
+    """
+    seed_string = f"{username}:{password}".encode("utf-8")
+    # Master-Entropie via SHA-512
+    entropy = hashlib.sha512(seed_string).hexdigest()
+    
+    # Beispielhafte Aufteilung für das Pop-up System
+    return {
+        "visible_phrase": "word1 word2 ... word24", # Hier greift deine Wortliste
+        "hidden_hash": hashlib.sha256(entropy.encode()).hexdigest(),
+        "admin_access": (username == "Admin" and rfof_chain.admin_address)
+    }
 
 def validate_access_phrase(phrase_list: list, target_hash: str) -> bool:
-    """
-    Validiert eine Wörter-Phrase gegen einen Ziel-Hash (Double SHA-256).
-    Wahrt die Parität zwischen User-Eingabe und Sovereign-Admin-Status.
-    """
+    """Validiert Phrase gegen Ziel-Hash (Double SHA-256)."""
     full_phrase = " ".join([w.strip().lower() for w in phrase_list if w])
-    if not full_phrase:
-        return False
-
-    # Double SHA-256
+    if not full_phrase: return False
     first_pass = hashlib.sha256(full_phrase.encode("utf-8")).digest()
-    final_hash = hashlib.sha256(first_pass).hexdigest()
-    
-    return final_hash == target_hash
+    return hashlib.sha256(first_pass).hexdigest() == target_hash
 
 # -------------------------------------------------------------------------
-# Security / integrity
+# CHAIN VIEWER LOGIK (Öffentlich & Explorer-Modus)
 # -------------------------------------------------------------------------
 
-def check_network_integrity() -> Dict[str, Any]:
-    """
-    Prüft die gesamte Chain-Integrität über den vm_core.
-    """
-    is_valid = vm_core.blockchain.is_chain_valid()
+def chain_info() -> Dict[str, Any]:
+    """Basisinfo für den Viewer (Layer 1)."""
     return {
-        "status": "SECURE" if is_valid else "COMPROMISED",
-        "valid": is_valid
+        "height": len(rfof_chain.chain),
+        "status": "SECURE" if rfof_chain.is_chain_valid() else "COMPROMISED",
+        "genesis_anchor": rfof_chain.genesis_hash
     }
+
+def get_block_details(index: int) -> Dict[str, Any]:
+    """Liefert Block-Daten für das Detail-Fenster (Layer 2 & 3)."""
+    if 0 <= index < len(rfof_chain.chain):
+        block = rfof_chain.chain[index]
+        return {
+            "meta": {"index": block.index, "hash": block.hash},
+            "details": block.data
+        }
+    return {}
 
 # -------------------------------------------------------------------------
 # Health / System
