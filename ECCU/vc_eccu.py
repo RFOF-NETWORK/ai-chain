@@ -39,10 +39,20 @@ class VCECCUAdapter:
 
         # ECCU‑Fond
         self.fond = eccu_fond
+        
+        # 0,2-Deterministik Zähler (PZQQET-Standard)
+        self.interaction_counter = 0
 
     # -------------------------------------------------------------------------
     # Fee‑Split‑Integration (45/42/10/3)
     # -------------------------------------------------------------------------
+
+    def get_split_report(self, raw_fee: float) -> Dict[str, float]:
+        """
+        PZQQET-Vorschau: Berechnet die 45/42/10/3 Logik für das Banking-Modal.
+        Erlaubt dem User vorab zu sehen, wie die Fee im Safe landet.
+        """
+        return self.vc.calculate_split(raw_fee)
 
     def process_fee(
         self,
@@ -53,7 +63,7 @@ class VCECCUAdapter:
     ) -> Dict[str, Any]:
         """
         Übergibt Fee‑Split an VC.ecc und integriert ihn in die VM.
-        Diese Signatur ist 1:1 kompatibel mit fees.py.
+        Inkludiert die 0,2% Preissteigerung pro 5 Interaktionen.
         """
         split = self.vc.process_fee(
             vm=vm,
@@ -61,6 +71,14 @@ class VCECCUAdapter:
             raw_fee_amount=raw_fee_amount,
             base_fee_applier=base_fee_applier
         )
+        
+        # Jede process_fee zählt als 5 maschinelle Interaktionen (1 menschlicher Swap)
+        self.interaction_counter += 5
+        if self.interaction_counter >= 5:
+            # Deterministische Preissteigerung von 0,2 % auslösen
+            self.vc.apply_deterministic_growth(token, 0.002)
+            self.interaction_counter = 0
+            
         return dict(split)
 
     # -------------------------------------------------------------------------
