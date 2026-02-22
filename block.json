@@ -18,6 +18,10 @@
         "license_ref": "LICENSE ID:[PZQQET-VC-ECC-2020] (Repository & Chain License)",
         "owner": "J.D.Koch",
         "origin": "RFOF-NETWORK / Quantum Ready Foundation / GlobalChain"
+      },
+      "display_metadata": {
+        "layer_visibility": "public",
+        "click_action": "none"
       }
     }
   },
@@ -63,6 +67,10 @@
         "block_hash": "BLOCK_1_HASH",
         "actor": "user_alpha",
         "context": "transaction:AI"
+      },
+      "display_metadata": {
+        "layer_visibility": "shielded",
+        "click_action": "openBlockModal"
       }
     }
   }
