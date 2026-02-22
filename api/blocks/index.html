@@ -452,25 +452,28 @@ setup()
   </py-config>
     <script src="https://rfof-network.github.io/scripts/auth-logic.js"></script>
     <script src="scripts/hash-generator.js"></script>
-<div id="prai-raw-shield" style="display:none !important; visibility:hidden;">
-    <pre>
-    LICENSE ID:[PZQQET-VC-ECC-2020]
+<div id="prai-raw-shield" style="display:none !important; visibility:hidden;"></div>
+    <script id="prai-genesis-json" type="application/json">
+      {
+  "genesis_block": {
+    "index": 0,
+    "genesis": true,
+    "owner": "RFOF-NETWORK",
+    "timestamp": "2020-01-01T00:00:00Z",
+    "address": "1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ",
+    "hash": "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541",
+    "validation_ap_hash": "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b",
+    "license": "PZQQET-VC-ECC-2020",
+    "ranking": 0
+  }
+}
+</script>
+  </div>
+  <pre>LICENSE ID:[PZQQET-VC-ECC-2020]
     Author: J.D.Koch
     Origin: RFOF-NETWORK, PZQQET, Quantum Ready Foundation
-    
-    GENESIS_BLOCK_DATA: {
-        "index": 0,
-        "genesis": True,
-        "owner": "RFOF-NETWORK",
-        "address": "1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ", # Deine feste Adresse
-        "hash": "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541",
-        "validation_ap_hash": "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b",
-        "license": "PZQQET-VC-ECC-2020",
-        "ranking": 0  # Admin-Rang
-    }
-    </pre>
-</div>
-        {
+  </pre>
+  ``````json
   "genesis_block": {
     "index": 0,
     "timestamp": "2020-01-01T00:00:00Z",
@@ -496,7 +499,7 @@ setup()
   },
   "example_block": {
     "index": 1,
-    "timestamp": "2026-02-13T05:30:00Z",
+    "timestamp": "2026-02-22T07:30:00Z",
     "previous_hash": "GENESIS_HASH",
     "hash": "BLOCK_1_HASH",
     "data": {
@@ -540,7 +543,7 @@ setup()
     }
   }
 }
-``` ``````json
+```
 LICENSE ID:[PZQQET-VC-ECC-2020]
 AI-CHAIN / VC.ECC / ECCU / GOLDENCHAIN ARCHITECTURE LICENSE
 Copyright (c) 2020–2026
