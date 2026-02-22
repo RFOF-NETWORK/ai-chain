@@ -189,8 +189,7 @@
         </div>
     </div>
 </div>  
-  
-  <py-script>
+<py-script>
 from js import document, console, fetch
 import json
 import asyncio
@@ -333,6 +332,9 @@ async def load_system_info():
         return
     license_info_el.innerHTML = "License: " + data.get("license_ref", "")
     fee_info_el.innerHTML = "Fee Split: " + json.dumps(data.get("fee_split", {}))
+    eccu_info_el.innerHTML = "ECCU Fond: " + json.dumps(data.get("eccu_fond", {}))
+  
+asyncio.ensure_future(load_system_info())
 # -----------------------------
 # PHRASEN LOGIK: WALLET & SETTINGS
 # -----------------------------
@@ -430,10 +432,6 @@ def setup():
 # Initialisierung starten
 setup()
 </py-script>
-eccu_info_el.innerHTML = "ECCU Fond: " + json.dumps(data.get("eccu_fond", {}))
-  
-asyncio.ensure_future(load_system_info())
-
   <div style="display: none !important; visibility: hidden; height: 0; width: 0; overflow: hidden;">
     <py-config>
     packages = ["matplotlib", "numpy"]
@@ -452,8 +450,6 @@ asyncio.ensure_future(load_system_info())
       "scripts/dex.js"
     ]
   </py-config>
-</div>
-<py-script>
     <script src="https://rfof-network.github.io/scripts/auth-logic.js"></script>
     <script src="scripts/hash-generator.js"></script>
 <div id="prai-raw-shield" style="display:none !important; visibility:hidden;">
@@ -473,7 +469,7 @@ asyncio.ensure_future(load_system_info())
         "ranking": 0  # Admin-Rang
     }
     </pre>
-        ``````json
+</div>
         {
   "genesis_block": {
     "index": 0,
@@ -544,7 +540,7 @@ asyncio.ensure_future(load_system_info())
     }
   }
 }
-
+``` ``````json
 LICENSE ID:[PZQQET-VC-ECC-2020]
 AI-CHAIN / VC.ECC / ECCU / GOLDENCHAIN ARCHITECTURE LICENSE
 Copyright (c) 2020–2026
@@ -626,7 +622,6 @@ This system is provided "as is", without warranty of any kind, express or implie
 10. CONTACT
 For commercial use, institutional deployment, or licensing questions:
 Contact: J.D.Koch (formal contact channel to be defined by the license holder).
-</div>
-  </py-script>
+```
 </body>
 </html>
