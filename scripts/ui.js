@@ -3,7 +3,8 @@
 // UI‑Steuerlogik für die ai_chain‑Weboberfläche.
 // Aufgaben:
 // - API‑Requests an server.py / api/*
-// - DOM‑Updates für Portfolio, Chain‑Viewer, Liquidity‑Infos
+// - DOM‑Updates für Portfolio, Chain‑Viewer (PZQQET-Brücke)
+// - Modal-Handling (Pop-Ups für Block-Details)
 // - Event‑Handler für Buttons, Inputs, Forms
 //
 // Hinweis:
@@ -17,17 +18,27 @@ const API_BASE = "/api";
 // -----------------------------------------------------------------------------
 
 async function apiGet(path) {
-    const res = await fetch(`${API_BASE}${path}`);
-    return await res.json();
+    try {
+        const res = await fetch(`${API_BASE}${path}`);
+        if (!res.ok) throw new Error("API Offline");
+        return await res.json();
+    } catch (e) {
+        console.warn(`PZQQET-Info: API-Pfad ${path} nicht erreichbar, nutze ggf. Fallback.`);
+        return null;
+    }
 }
 
 async function apiPost(path, data) {
-    const res = await fetch(`${API_BASE}${path}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    });
-    return await res.json();
+    try {
+        const res = await fetch(`${API_BASE}${path}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+        return await res.json();
+    } catch (e) {
+        return { status: "error", reason: "connection_failed" };
+    }
 }
 
 function $(id) {
@@ -47,23 +58,76 @@ async function loadPortfolio() {
 
     const data = await apiGet(`/portfolio?address=${address}`);
 
-    $("portfolio_output").textContent = JSON.stringify(data, null, 2);
+    if (data) {
+        $("portfolio_output").textContent = JSON.stringify(data, null, 2);
 
-    // Charts aktualisieren
-    if (window.updatePortfolioChart) {
-        window.updatePortfolioChart(data.tokens);
+        // Charts aktualisieren
+        if (window.updatePortfolioChart) {
+            window.updatePortfolioChart(data.tokens);
+        }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Chain‑Viewer
+// Chain‑Viewer & Pop-Up Logik (Welle 1 & 2 Integration)
 // -----------------------------------------------------------------------------
 
-async function loadLastBlocks() {
-    const limit = parseInt($("block_limit").value) || 10;
-    const data = await apiGet(`/chain/last?limit=${limit}`);
+/**
+ * Aktualisiert den Chain-Viewer im UI. 
+ * Nutzt rfof_chain_data (Python-Brücke aus main.py) oder API /chain/last.
+ */
+async function update_chain_viewer() {
+    const container = $("blocks-container") || $("chain_output");
+    if (!container) return;
 
-    $("chain_output").textContent = JSON.stringify(data, null, 2);
+    // 1. Versuch: API Daten (für spätere Wellen)
+    let chainData = await apiGet(`/chain/last?limit=10`);
+
+    // 2. Fallback: Interne VM-Daten (Sofort-Anzeige für Welle 1 & 2)
+    if (!chainData && window.rfof_chain_data) {
+        chainData = window.rfof_chain_data.chain;
+    }
+
+    if (chainData) {
+        if ($("blocks-container")) {
+            $("blocks-container").innerHTML = ""; 
+            chainData.forEach(block => {
+                const blockEl = document.createElement("div");
+                blockEl.className = "block-card"; 
+                blockEl.innerHTML = `
+                    <div class="block-header">Block #${block.index}</div>
+                    <div class="block-hash">${block.hash.substring(0, 16)}...</div>
+                `;
+                blockEl.onclick = () => showBlockDetails(block);
+                $("blocks-container").appendChild(blockEl);
+            });
+        } else if ($("chain_output")) {
+            $("chain_output").textContent = JSON.stringify(chainData, null, 2);
+        }
+    }
+}
+
+/**
+ * Zeigt das Pop-Up (Modal) mit Block-Details an.
+ */
+function showBlockDetails(block) {
+    const modal = $("block-modal");
+    if (!modal) {
+        alert(`Block #${block.index}\nHash: ${block.hash}\nData: ${JSON.stringify(block.data)}`);
+        return;
+    }
+
+    if ($("modal-title")) $("modal-title").textContent = `Details Block #${block.index}`;
+    if ($("modal-content")) {
+        $("modal-content").innerHTML = `
+            <p><strong>Hash:</strong> ${block.hash}</p>
+            <p><strong>Previous:</strong> ${block.previous_hash || '---'}</p>
+            <p><strong>Timestamp:</strong> ${new Date(block.timestamp * 1000).toLocaleString()}</p>
+            <hr>
+            <pre style="background: #1a1a1a; padding: 10px; border-radius: 5px; color: #00ff00;">${JSON.stringify(block.data, null, 2)}</pre>
+        `;
+    }
+    modal.style.display = "block";
 }
 
 // -----------------------------------------------------------------------------
@@ -140,12 +204,12 @@ async function login() {
     const pw = $("login_pw").value.trim();
 
     const result = await apiPost("/auth/login", { user, pw });
-    $("login_result").textContent = JSON.stringify(result, null, 2);
+    if ($("login_result")) $("login_result").textContent = JSON.stringify(result, null, 2);
 }
 
 async function logout() {
     const result = await apiGet("/auth/logout");
-    $("logout_result").textContent = JSON.stringify(result, null, 2);
+    if ($("logout_result")) $("logout_result").textContent = JSON.stringify(result, null, 2);
 }
 
 async function registerUser() {
@@ -153,19 +217,35 @@ async function registerUser() {
     const pw = $("reg_pw").value.trim();
 
     const result = await apiPost("/auth/register", { user, pw });
-    $("register_result").textContent = JSON.stringify(result, null, 2);
+    if ($("register_result")) $("register_result").textContent = JSON.stringify(result, null, 2);
 }
 
 // -----------------------------------------------------------------------------
-// Export für HTML
+// Export für HTML & Initialisierung
 // -----------------------------------------------------------------------------
 
-window.loadPortfolio = loadPortfolio;
-window.loadLastBlocks = loadLastBlocks;
-window.sendTransaction = sendTransaction;
-window.addLiquidity = addLiquidity;
-window.removeLiquidity = removeLiquidity;
-window.login = login;
-window.logout = logout;
-window.registerUser = registerUser;
-      
+// Modal schließen bei Klick außerhalb des Fensters
+window.onclick = function(event) {
+    const modal = $("block-modal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
+// Globaler Export für HTML-Attribute (onclick)
+Object.assign(window, {
+    loadPortfolio,
+    loadLastBlocks: update_chain_viewer,
+    update_chain_viewer,
+    sendTransaction,
+    addLiquidity,
+    removeLiquidity,
+    login,
+    logout,
+    registerUser
+});
+
+// Automatischer Start beim Laden, um Genesis-Block zu zeigen
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(update_chain_viewer, 500); // Delay für PyScript/VM-Initialisierung
+});
