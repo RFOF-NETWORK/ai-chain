@@ -19,11 +19,13 @@ class AITokenExtensions:
 
         self.token.balances[address] -= amount
 
+        # Integration in die Blockchain mit Shield-Logik
         self.vm.blockchain.add_block({
             "event": "burn",
             "token": "AI",
             "address": address,
-            "amount": amount
+            "amount": amount,
+            "display_metadata": {"layer": 2, "visibility": "shielded"}
         })
 
         return True
@@ -31,8 +33,24 @@ class AITokenExtensions:
     def reward_for_ai_compute(self, address: str, compute_units: float):
         """
         Belohnt echte Compute-Leistung mit AI-Token.
+        PZQQET-Integration: Liefert Layer 3 Details für das Dashboard-Modal.
         """
         reward = compute_units * 0.01  # Beispiel: 0.01 AI pro Compute-Unit
         self.token.mint(address, reward)
-        return reward
-
+        
+        # Der Block-Eintrag erhält hier erweiterte Details für das Shield
+        self.vm.blockchain.add_block({
+            "event": "compute_reward",
+            "token": "AI",
+            "to": address,
+            "amount": reward,
+            "compute_units": compute_units,
+            "display_metadata": {
+                "layer": 3, 
+                "visibility": "shielded",
+                "shield_active": True
+            }
+        })
+        
+        # Rückgabe für das System-Handling (Welle 2 Logik)
+        return {"shield_active": True, "reward": reward, "units": compute_units}
