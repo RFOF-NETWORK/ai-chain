@@ -195,6 +195,7 @@ from js import document, console, fetch
 import json
 import asyncio
 import hashlib
+from pyodide.ffi import create_proxy
 
 # -----------------------------
 # Helper: fetch JSON from API
@@ -400,9 +401,17 @@ def submit_phrase(event):
         # Hier könnten wir dem User einen visuellen Hinweis geben ⚠️
 
 # --- Event-Binding ---
-document.getElementById("btn-phrase-login").onclick = open_phrase_modal
-document.getElementById("btn-submit-phrase").onclick = submit_phrase
+def setup():
+    # Wir erstellen Proxies für die Python-Funktionen
+    open_proxy = create_proxy(open_phrase_modal)
+    submit_proxy = create_proxy(submit_phrase)
+    
+    # Verknüpfung mit den Buttons
+    document.getElementById("btn-phrase-login").addEventListener("click", open_proxy)
+    document.getElementById("btn-submit-phrase").addEventListener("click", submit_proxy)
 
+setup()
+    
   </py-script>
   <div style="display: none !important; visibility: hidden; height: 0; width: 0; overflow: hidden;">
     <py-config>
@@ -597,5 +606,6 @@ This system is provided "as is", without warranty of any kind, express or implie
 For commercial use, institutional deployment, or licensing questions:
 Contact: J.D.Koch (formal contact channel to be defined by the license holder).
 </div>
+  </py-script>
 </body>
 </html>
