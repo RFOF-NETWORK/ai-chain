@@ -31,7 +31,7 @@ class ECCUFond:
         self.holders: Dict[str, float] = {}
 
     # -------------------------------------------------------------------------
-    # NAV-Berechnung
+    # NAV-Berechnung & Stats (PZQQET-Vorschrift)
     # -------------------------------------------------------------------------
 
     def get_nav(self) -> float:
@@ -42,6 +42,15 @@ class ECCUFond:
         if self.total_shares <= 0:
             return 1.0
         return self.total_assets / self.total_shares
+
+    def get_fond_stats(self) -> Dict[str, float]:
+        """
+        Liefert die Kern-Statistiken für das Dashboard-Modul.
+        """
+        return {
+            "nav": self.get_nav(), 
+            "assets": self.total_assets
+        }
 
     # -------------------------------------------------------------------------
     # Ein- und Ausstieg
@@ -112,7 +121,7 @@ class ECCUFond:
         }
 
     # -------------------------------------------------------------------------
-    # Abfragen / State
+    # Abfragen / State (UI-Optimiert)
     # -------------------------------------------------------------------------
 
     def get_holder_info(self, address: str) -> Dict[str, Any]:
@@ -131,7 +140,7 @@ class ECCUFond:
 
     def get_state(self) -> Dict[str, Any]:
         """
-        Liefert einen vollständigen, deterministischen Snapshot des Fonds.
+        Liefert einen vollständigen Snapshot inklusive nav_status für das UI.
         Ideal für VC.ecc, Monitoring, Audits.
         """
         nav = self.get_nav()
@@ -139,6 +148,7 @@ class ECCUFond:
             "total_assets": self.total_assets,
             "total_shares": self.total_shares,
             "nav": nav,
+            "nav_status": "stable",  # Indikator für den grünen Status-Punkt im UI 🟢
             "holders": {
                 addr: {
                     "shares": shares,
@@ -149,6 +159,5 @@ class ECCUFond:
         }
 
 
-# Optional: Singleton-Instanz für einfache Nutzung
+# Singleton-Instanz für einfache Nutzung
 eccu_fond = ECCUFond()
-
