@@ -354,11 +354,16 @@ async def load_system_info():
 
 asyncio.ensure_future(load_system_info())
 # -----------------------------
-# phrasen: wallet & settings create/login admin/user
+# PHRASEN LOGIK: WALLET & SETTINGS
 # -----------------------------
+
 def open_phrase_modal(event):
     """Erstellt das Raster und öffnet das Modal-Fenster."""
-    username = document.getElementById("login-username").value
+    username_el = document.getElementById("login-username")
+    if not username_el:
+        return
+        
+    username = username_el.value
     if not username:
         console.log("Fehler: Kein Username für Phrase-Login.")
         return
@@ -367,7 +372,7 @@ def open_phrase_modal(event):
     grid = document.getElementById("phrase-grid")
     grid.innerHTML = ""  
     
-    # Admin bekommt 48 Felder, normale User 24 🧩
+    # Dynamische Anzahl basierend auf Rang: Admin = 48, User = 24 🧩
     phrase_count = 48 if username.lower() == "admin" else 24
     
     for i in range(1, phrase_count + 1):
@@ -391,40 +396,59 @@ def submit_phrase(event):
     
     # 1. Wörter einsammeln und normalisieren 🧹
     phrase_list = [inputs.item(i).value.strip().lower() for i in range(inputs.length)]
-    full_phrase = " ".join(phrase_list)
+    full_phrase = " ".join([w for w in phrase_list if w]) # Nur ausgefüllte Wörter
     
     if not full_phrase:
         console.log("Fehler: Keine Phrase eingegeben.")
         return
 
-    # 2. Double SHA-256 Hashing (RFOF-Standard) 🔐🔐
+    # 2. Double SHA-256 Hashing (RFOF-PZQQET Standard) 🔐🔐
     # Erster Durchgang
     first_pass = hashlib.sha256(full_phrase.encode("utf-8")).digest()
-    # Zweiter Durchgang (Hex-Output)
+    # Zweiter Durchgang (Hex-Output für den Vergleich)
     final_hash = hashlib.sha256(first_pass).hexdigest()
     
     # 3. Validierung gegen den Genesis-Admin-Hash 🏆
-    # Das ist der Wert aus deiner blockchain.py
+    # Wert aus deiner blockchain.py (PZQQET AXIOME)
     admin_target = "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b"
     
     if final_hash == admin_target:
         console.log("✅ Validierung erfolgreich! Zugriff auf Admin-Wallet gewährt.")
-        # Modal schließen und Wallet anzeigen
         document.getElementById("phrase-modal").classList.add("hidden")
-        # Hier rufen wir die Funktion auf, um die Wallet-Sektion zu zeigen
-        # (Stelle sicher, dass showSection im JS-Teil definiert ist)
+        # Umschalten auf Wallet-Sektion via JS-Interop
+        showSection('wallet')
+        
+        # Admin-Status visuell bestätigen
+        addr_display = document.getElementById("wallet-address")
+        if addr_display:
+            addr_display.innerHTML = "<strong>Sovereign Admin:</strong> 1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ"
     else:
         console.log("❌ Validierung fehlgeschlagen. Der Hash stimmt nicht überein.")
-        # Hier könnten wir dem User einen visuellen Hinweis geben ⚠️
+        # Visuelles Feedback: Roter Rahmen für das Grid
+        grid.style.border = "1px solid #ff4444"
 
-# --- Event-Binding ---
+# -----------------------------
+# SETUP (Event-Binding via Proxy) 🚀
+# -----------------------------
+
 def setup():
-    # Wir erstellen Proxies für die Python-Funktionen
+    # Wir erstellen Proxies, damit JS die Python-Funktionen sicher findet
     open_proxy = create_proxy(open_phrase_modal)
     submit_proxy = create_proxy(submit_phrase)
     
-    # Verknüpfung mit den Buttons
-    document.getElementById("btn-phrase-login").addEventListener("click", open_proxy)
-    document.getElementById("btn-submit-phrase").addEventListener("click", submit_proxy)
+    # Verknüpfung mit den Buttons im DOM
+    btn_login = document.getElementById("btn-phrase-login")
+    btn_submit = document.getElementById("btn-submit-phrase")
+    
+    if btn_login:
+        btn_login.addEventListener("click", open_proxy)
+    if btn_submit:
+        btn_submit.addEventListener("click", submit_proxy)
+    
+    console.log("PRAI-System: Event-Binding abgeschlossen.")
 
+# Initialisierung starten
 setup()
+</py-script>
+</body>
+</html>
