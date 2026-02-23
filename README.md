@@ -1880,143 +1880,246 @@ Das ist GENIAL, weil:
 
 ---
 
-⭐ 5. EURO‑PREIS NACH JEDEM SCENARIO (Start = 1,25 € für AI & COIN)
+⭐ 5. EURO‑PREIS NACH JEDEM SCENARIO (Start = 1,25 €)
 
-Deine Regeln:
+Regeln:
 
 - AI Genesis‑Preis = 1,25 €
 - COIN Genesis‑Preis = 1,25 €
 - AIC‑LP Genesis‑Preis = 2,50 €
 - ECCU Genesis‑Preis = 2,50 € (immer stabil)
-- Preissteigerung = +0,2 % pro Token‑Transfer
-- 1 Roundtrip = 2 Transfers → AI +0,2 %, COIN +0,2 %
-- AIC‑LP enthält beide Token → +0,4 % pro Roundtrip
-- ECCU steigt nicht, da energie‑fix
+- 1 menschliche Interaktion = +0,2 %
+- 1 Swap = 1 menschliche Interaktion = +0,2 %
+- 1 Roundtrip = 2 Swaps = +0,4 % pro Token
+- AIC‑LP enthält beide Token → +0,8 % pro Roundtrip
+- ECCU steigt nie (energie‑fix)
+
+Preisformeln:
+
+AIₙ = 1,25 * (1,004)ⁿ  
+COINₙ = 1,25 * (1,004)ⁿ  
+AICₙ = 2,50 * (1,008)ⁿ  
+ECCUₙ = 2,50
 
 ---
 
-⭐ Preisformeln (normale Schrift)
+1. Nach 1 Roundtrip
 
-AIₙ = 1,25 * (1,002)ⁿ  
-COINₙ = 1,25 * (1,002)ⁿ  
-AICₙ = 2,50 * (1,004)ⁿ  
-ECCUₙ = 2,50 (immer gleich)
-
----
-
-⭐ 1. Nach 1 Roundtrip
-
-AI₁ = 1,25 * 1,002 = 1,2525 €  
-COIN₁ = 1,2525 €  
-AIC₁ = 2,50 * 1,004 = 2,51 €  
+AI₁ = 1,25 * 1,004 = 1,255 €  
+COIN₁ = 1,255 €  
+AIC₁ = 2,50 * 1,008 = 2,52 €  
 ECCU₁ = 2,50 €
 
 ---
 
-⭐ 2. Nach 10 Roundtrips
+2. Nach 10 Roundtrips
 
-AI₁₀ = 1,25 * (1,002)¹⁰  
-(1,002)¹⁰ ≈ 1,0202  
-AI₁₀ = 1,27525 €  
-COIN₁₀ = 1,27525 €
-
-AIC₁₀ = 2,50 * (1,004)¹⁰  
+AI₁₀ = 1,25 * (1,004)¹⁰  
 (1,004)¹⁰ ≈ 1,0407  
-AIC₁₀ = 2,60175 €
+AI₁₀ = 1,3009 €  
+COIN₁₀ = 1,3009 €
+
+AIC₁₀ = 2,50 * (1,008)¹⁰  
+(1,008)¹⁰ ≈ 1,083  
+AIC₁₀ = 2,7075 €
 
 ECCU₁₀ = 2,50 €
 
 ---
 
-⭐ 3. Nach 100 Roundtrips
+3. Nach 100 Roundtrips
 
-AI₁₀₀ = 1,25 * (1,002)¹⁰⁰  
-(1,002)¹⁰⁰ ≈ 1,221  
-AI₁₀₀ = 1,52625 €  
-COIN₁₀₀ = 1,52625 €
-
-AIC₁₀₀ = 2,50 * (1,004)¹⁰⁰  
+AI₁₀₀ = 1,25 * (1,004)¹⁰⁰  
 (1,004)¹⁰⁰ ≈ 1,488  
-AIC₁₀₀ = 3,72 €
+AI₁₀₀ = 1,86 €  
+COIN₁₀₀ = 1,86 €
+
+AIC₁₀₀ = 2,50 * (1,008)¹⁰⁰  
+(1,008)¹⁰⁰ ≈ 2,158  
+AIC₁₀₀ = 5,395 €
 
 ECCU₁₀₀ = 2,50 €
 
 ---
 
-⭐ 4. Nach 1.000 Roundtrips
+4. Nach 1.000 Roundtrips
 
-AI₁₀₀₀ = 1,25 * (1,002)¹⁰⁰⁰  
-(1,002)¹⁰⁰⁰ ≈ 8,72  
-AI₁₀₀₀ = 10,90 €  
-COIN₁₀₀₀ = 10,90 €
-
-AIC₁₀₀₀ = 2,50 * (1,004)¹⁰⁰⁰  
+AI₁₀₀₀ = 1,25 * (1,004)¹⁰⁰⁰  
 (1,004)¹⁰⁰⁰ ≈ 54,6  
-AIC₁₀₀₀ = 136,50 €
+AI₁₀₀₀ = 68,25 €  
+COIN₁₀₀₀ = 68,25 €
+
+AIC₁₀₀₀ = 2,50 * (1,008)¹⁰⁰⁰  
+(1,008)¹⁰⁰⁰ ≈ 2980  
+AIC₁₀₀₀ = 7.450 €
 
 ECCU₁₀₀₀ = 2,50 €
 
 ---
 
-⭐ 5. Nach 10.000 Roundtrips
+5. Nach 10.000 Roundtrips
 
-AI₁₀₀₀₀ = 1,25 * (1,002)¹⁰⁰⁰⁰  
-(1,002)¹⁰⁰⁰⁰ ≈ 63,2  
-AI₁₀₀₀₀ = 79,00 €  
-COIN₁₀₀₀₀ = 79,00 €
-
-AIC₁₀₀₀₀ = 2,50 * (1,004)¹⁰⁰⁰⁰  
+AI₁₀₀₀₀ = 1,25 * (1,004)¹⁰⁰⁰⁰  
 (1,004)¹⁰⁰⁰⁰ ≈ 3980  
-AIC₁₀₀₀₀ = 9.950 €
+AI₁₀₀₀₀ = 4.975 €  
+COIN₁₀₀₀₀ = 4.975 €
+
+AIC₁₀₀₀₀ = 2,50 * (1,008)¹⁰⁰⁰⁰  
+(1,008)¹⁰⁰⁰⁰ ≈ 2.256.000  
+AIC₁₀₀₀₀ = 5.640.000 €
 
 ECCU₁₀₀₀₀ = 2,50 €
 
 ---
 
-⭐ 6. Nach 100.000 Roundtrips
+6. Nach 100.000 Roundtrips
 
-AI₁₀₀₀₀₀ = 1,25 * (1,002)¹⁰⁰⁰⁰⁰  
-(1,002)¹⁰⁰⁰⁰⁰ ≈ 460  
-AI₁₀₀₀₀₀ = 575 €  
-COIN₁₀₀₀₀₀ = 575 €
-
-AIC₁₀₀₀₀₀ = 2,50 * (1,004)¹⁰⁰⁰⁰⁰  
+AI₁₀₀₀₀₀ = 1,25 * (1,004)¹⁰⁰⁰⁰⁰  
 (1,004)¹⁰⁰⁰⁰⁰ ≈ 33600  
-AIC₁₀₀₀₀₀ = 84.000 €
+AI₁₀₀₀₀₀ = 42.000 €  
+COIN₁₀₀₀₀₀ = 42.000 €
+
+AIC₁₀₀₀₀₀ = 2,50 * (1,008)¹⁰⁰⁰⁰⁰  
+(1,008)¹⁰⁰⁰⁰⁰ ≈ 2.256.000.000  
+AIC₁₀₀₀₀₀ = 5.640.000.000 €
 
 ECCU₁₀₀₀₀₀ = 2,50 €
 
 ---
 
-⭐ 7. Nach 1.000.000 Roundtrips
+7. Nach 1.000.000 Roundtrips
 
-AI₁₀₀₀₀₀₀ = 1,25 * (1,002)¹⁰⁰⁰⁰⁰⁰  
-(1,002)¹⁰⁰⁰⁰⁰⁰ ≈ 3360  
-AI₁₀₀₀₀₀₀ = 4200 €  
-COIN₁₀₀₀₀₀₀ = 4200 €
-
-AIC₁₀₀₀₀₀₀ = 2,50 * (1,004)¹⁰⁰⁰⁰⁰⁰  
+AI₁₀₀₀₀₀₀ = 1,25 * (1,004)¹⁰⁰⁰⁰⁰⁰  
 (1,004)¹⁰⁰⁰⁰⁰⁰ ≈ 2.256.000  
-AIC₁₀₀₀₀₀₀ = 5.640.000 €
+AI₁₀₀₀₀₀₀ = 2.820.000 €  
+COIN₁₀₀₀₀₀₀ = 2.820.000 €
+
+AIC₁₀₀₀₀₀₀ = 2,50 * (1,008)¹⁰⁰⁰⁰⁰⁰  
+(1,008)¹⁰⁰⁰⁰⁰⁰ ≈ 5,09 * 10¹²  
+AIC₁₀₀₀₀₀₀ ≈ 1,27 * 10¹³ €
 
 ECCU₁₀₀₀₀₀₀ = 2,50 €
 
 ---
 
-⭐ FAZIT — ALLE TOKEN KORREKT AUF 1,25 € BASIS
+MINING‑BELOHNUNG PRO TB
 
-| Roundtrip | AI‑Preis | COIN‑Preis | AIC‑LP‑Preis | ECCU‑Preis |
-|----------:|----------:|------------:|--------------:|------------:|
-| 0         | 1,25 €    | 1,25 €      | 2,50 €        | 2,50 €      |
-| 1         | 1,2525 €  | 1,2525 €    | 2,51 €        | 2,50 €      |
-| 10        | 1,27525 € | 1,27525 €   | 2,60175 €     | 2,50 €      |
-| 100       | 1,52625 € | 1,52625 €   | 3,72 €        | 2,50 €      |
-| 1.000     | 10,90 €   | 10,90 €     | 136,50 €      | 2,50 €      |
-| 10.000    | 79,00 €   | 79,00 €     | 9.950 €       | 2,50 €      |
-| 100.000   | 575,00 €  | 575,00 €    | 84.000 €      | 2,50 €      |
-| 1.000.000 | 4.200,00 €| 4.200,00 €  | 5.640.000 €   | 2,50 €      |
+Grundlage:
+
+- 1 TB = 1,25 €
+- User bekommt AI oder COIN im Wert von 1,25 €
+- Admin bekommt 0,5 ECCU = 1,25 €
+
+Formeln:
+
+AIproTBₙ = 1,25 / AIₙ  
+COINproTBₙ = 1,25 / COINₙ  
+
+Beispiele:
+
+- Genesis:  
+  AIproTB₀ = 1  
+  COINproTB₀ = 1  
+
+- Nach 1.000 Roundtrips (AI ≈ 68,25 €):  
+  AIproTB₁₀₀₀ = 1,25 / 68,25 ≈ 0,0183 AI  
+  COINproTB₁₀₀₀ ≈ 0,0183 COIN  
+
+---
+
+MINING‑BELOHNUNG PRO ECCU
+
+1 ECCU = 2 TB = 2,50 €
+
+AIproECCUₙ = 2 * (1,25 / AIₙ)  
+COINproECCUₙ = 2 * (1,25 / COINₙ)
+
+Beispiele:
+
+- Genesis:  
+  AIproECCU₀ = 2  
+  COINproECCU₀ = 2  
+
+- Nach 1.000 Roundtrips:  
+  AIproECCU₁₀₀₀ = 2 * (1,25 / 68,25) ≈ 0,0366 AI  
+  COINproECCU₁₀₀₀ ≈ 0,0366 COIN  
+
+---
+
+SAFE / OWNER / FOND / SYSTEM – WERTE
+
+Gesamt‑Fee aus Volumen V:
+
+Fee_total = V * 0,007
+
+Aufteilung:
+
+SAFE = Fee_total * 0,45  
+OWNER = Fee_total * 0,42  
+FOND = Fee_total * 0,10  
+SYSTEM = Fee_total * 0,03  
+
+Beispiel:  
+V = 1.000 COIN → Fee_total = 7 COIN
+
+SAFE = 3,15 COIN  
+OWNER = 2,94 COIN  
+FOND = 0,70 COIN  
+SYSTEM = 0,21 COIN  
+
+ECCU‑Deckung:
+
+ECCU_Deckung = SAFE * 0,20  
+ECCU_Deckung = 3,15 * 0,20 = 0,63  
+
 
 Das ist exponentielle Wertsteigerung durch echte Interaktion.
+
+MASTER‑TABELLE (AI, COIN, AIC‑LP, ECCU, Mining, SAFE, OWNER, FOND, SYSTEM)
+
+| Roundtrip | AI‑Preis | COIN‑Preis | AIC‑LP‑Preis | ECCU‑Preis | AI pro TB | COIN pro TB | AI pro ECCU | COIN pro ECCU | SAFE | OWNER | FOND | SYSTEM | ECCU‑Deckung |
+|----------:|----------:|------------:|--------------:|------------:|-----------:|--------------:|---------------:|----------------:|--------:|---------:|--------:|----------:|----------------:|
+| 0 | 1,25 € | 1,25 € | 2,50 € | 2,50 € | 1,0000 | 1,0000 | 2,0000 | 2,0000 | 0 | 0 | 0 | 0 | 0 |
+| 1 | 1,255 € | 1,255 € | 2,52 € | 2,50 € | 0,9960 | 0,9960 | 1,9920 | 1,9920 | 0,00315 | 0,00294 | 0,00070 | 0,00021 | 0,00063 |
+| 10 | 1,3009 € | 1,3009 € | 2,7075 € | 2,50 € | 0,9600 | 0,9600 | 1,9200 | 1,9200 | 0,0315 | 0,0294 | 0,0070 | 0,0021 | 0,0063 |
+| 100 | 1,86 € | 1,86 € | 5,395 € | 2,50 € | 0,6720 | 0,6720 | 1,3440 | 1,3440 | 0,315 | 0,294 | 0,070 | 0,021 | 0,063 |
+| 1.000 | 68,25 € | 68,25 € | 7.450 € | 2,50 € | 0,0183 | 0,0183 | 0,0366 | 0,0366 | 3,15 | 2,94 | 0,70 | 0,21 | 0,63 |
+| 10.000 | 4.975 € | 4.975 € | 5.640.000 € | 2,50 € | 0,000251 | 0,000251 | 0,000502 | 0,000502 | 31,5 | 29,4 | 7,0 | 2,1 | 6,3 |
+| 100.000 | 42.000 € | 42.000 € | 5.640.000.000 € | 2,50 € | 0,0000297 | 0,0000297 | 0,0000594 | 0,0000594 | 315 | 294 | 70 | 21 | 63 |
+| 1.000.000 | 2.820.000 € | 2.820.000 € | 1,27 * 10¹³ € | 2,50 € | 0,000000443 | 0,000000443 | 0,000000886 | 0,000000886 | 3.150 | 2.940 | 700 | 210 | 630 |
+
+---
+
+⭐ ERKLÄRUNG DER SPALTEN
+
+AI‑Preis / COIN‑Preis
+Steigen pro Roundtrip um +0,4 %.
+
+AIC‑LP‑Preis
+Steigt pro Roundtrip um +0,8 %.
+
+ECCU‑Preis
+Bleibt immer 2,50 €.
+
+AI pro TB / COIN pro TB
+1 TB = 1,25 €  
+Token‑Menge = 1,25 / Tokenpreis
+
+AI pro ECCU / COIN pro ECCU
+1 ECCU = 2 TB = 2,50 €  
+Token‑Menge = 2 * (1,25 / Tokenpreis)
+
+SAFE / OWNER / FOND / SYSTEM
+Aus 0,7 % Fee pro Roundtrip‑Volumen:
+
+- SAFE = 45 %  
+- OWNER = 42 %  
+- FOND = 10 %  
+- SYSTEM = 3 %
+
+ECCU‑Deckung
+20 % von SAFE.
+
 
 ---
 
