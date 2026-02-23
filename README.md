@@ -2004,7 +2004,7 @@ ECCU₁₀₀₀₀₀₀ = 2,50 €
 ---
 
 ⭐ FAZIT — ALLE TOKEN KORREKT AUF 1,25 € BASIS
-```
+
 | Roundtrip | AI‑Preis | COIN‑Preis | AIC‑LP‑Preis | ECCU‑Preis |
 |----------:|----------:|------------:|--------------:|------------:|
 | 0         | 1,25 €    | 1,25 €      | 2,50 €        | 2,50 €      |
@@ -2015,7 +2015,6 @@ ECCU₁₀₀₀₀₀₀ = 2,50 €
 | 10.000    | 79,00 €   | 79,00 €     | 9.950 €       | 2,50 €      |
 | 100.000   | 575,00 €  | 575,00 €    | 84.000 €      | 2,50 €      |
 | 1.000.000 | 4.200,00 €| 4.200,00 €  | 5.640.000 €   | 2,50 €      |
-```
 
 Das ist exponentielle Wertsteigerung durch echte Interaktion.
 
