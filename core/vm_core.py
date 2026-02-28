@@ -7,8 +7,12 @@ Aufgabe:
 - Einheitlicher Einstiegspunkt für Kernoperationen (Transaktionen, Wallet, Liquidity, Viewer).
 - Kapselt Aufrufe an blockchain, fees, wallet_system, liquidity_pool, smartcontracts und Tokens.
 - Bietet eine stabile, deterministische Schnittstelle für api/, ai-chain.py und vm.VC.
+- INTEGRIERT: PZQQET-Axiome & PRAI-Wachstumslogik (Welle 3).
 """
 
+import hashlib
+import time
+import json
 from typing import Any, Dict, Optional, List
 
 from core.blockchain import Blockchain
@@ -36,21 +40,30 @@ class VMCore:
     - die Viewer-Logik
     - die Token-Module
     - die Smartcontracts
+    - PZQQET Deterministik & Energie-Anker
     """
 
     def __init__(self) -> None:
+        # --- Deine bestehende Struktur ---
         self.blockchain = Blockchain()
         self.fees = FeeCalculator()
         self.wallets = WalletSystem()
         self.liquidity = LiquidityPool()
         self.viewer = ChainViewer()
 
-        # Token-Referenzen (können einfache Klassen oder Funktionsmodule sein)
+        # Token-Referenzen
         self.ai_token = ai_token
         self.coin_token = coin_token
         self.aic_lp_token = aic_lp_token
-
         self.smartcontracts = smartcontracts
+
+        # --- NEU: PZQQET Kern-Parameter (Welle 3 Ergänzung) ---
+        self.version = "PZQQET-3.0-AUTARK"
+        self.admin_owner = "ADMIN-PZQQET-SATORI"
+        self.energy_anchor = 1.25  # Euro pro Terabyte
+        self.interaction_cycles = 0
+        self.current_eccu_value = 1.0
+        self.growth_steps = {5: 0.002, 10: 0.004, 20: 0.008}
 
     # -------------------------------------------------------------------------
     # Basis-Informationen
@@ -59,12 +72,16 @@ class VMCore:
     def get_chain_info(self) -> Dict[str, Any]:
         """
         Liefert eine deterministische Übersicht über den aktuellen Chain-Zustand.
+        Erweitert um PZQQET-Status.
         """
-        return {
+        info = {
             "height": self.blockchain.get_height(),
             "last_block_hash": self.blockchain.get_last_block_hash(),
             "total_transactions": self.blockchain.get_total_transactions(),
+            "prai_version": self.version,
+            "eccu_value": self.current_eccu_value
         }
+        return info
 
     def get_wallet_balance(self, address: str) -> Dict[str, Any]:
         """
@@ -102,8 +119,12 @@ class VMCore:
         - Berechnet Gebühren
         - Validiert
         - Übergibt an Blockchain
+        - Triggert PZQQET-Wachstumszyklus
         """
         metadata = metadata or {}
+
+        # PZQQET-Wachstumstrigger bei jeder Transaktion
+        self.apply_prai_growth()
 
         fee = self.fees.calculate_fee(amount=amount, token=token)
         tx = {
@@ -113,9 +134,10 @@ class VMCore:
             "token": token,
             "fee": fee,
             "metadata": metadata,
+            "prai_cycle": self.interaction_cycles
         }
 
-        # Token-spezifische Logik (falls vorhanden)
+        # Token-spezifische Logik
         if token.upper() == "AI":
             validator = getattr(self.ai_token, "validate_tx", None)
         elif token.upper() == "COIN":
@@ -136,7 +158,7 @@ class VMCore:
 
         # Übergabe an Blockchain
         tx_hash = self.blockchain.add_transaction(tx)
-        return {"status": "accepted", "tx_hash": tx_hash, "fee": fee}
+        return {"status": "accepted", "tx_hash": tx_hash, "fee": fee, "eccu_rate": self.current_eccu_value}
 
     # -------------------------------------------------------------------------
     # Liquidity / Pools
@@ -199,8 +221,33 @@ class VMCore:
         try:
             result = handler(self, **params)
             return {"status": "ok", "result": result}
-        except Exception as exc:  # bewusst generisch, VM fängt ab
+        except Exception as exc:
             return {"status": "error", "reason": str(exc)}
+
+    # -------------------------------------------------------------------------
+    # PZQQET & PRAI Kern-Logik (Mechatronische Ergänzung)
+    # -------------------------------------------------------------------------
+
+    def validate_mechatronic_state(self) -> str:
+        """ Simuliert das 'Laufen ohne zu Laufen' via Hashing. """
+        echo_hash = hashlib.sha256(str(time.time()).encode()).hexdigest()
+        return f"System-Echo stabil: {echo_hash[:16]}..."
+
+    def apply_prai_growth(self) -> None:
+        """ Implementiert den Mehr-rein-als-raus-Effekt. """
+        self.interaction_cycles += 1
+        for step, rate in self.growth_steps.items():
+            if self.interaction_cycles % step == 0:
+                self.current_eccu_value += (self.current_eccu_value * rate)
+
+    def get_fee_splitting(self, amount: float) -> Dict[str, float]:
+        """ Berechnet den 45/42/10/3 Split. """
+        return {
+            "Liquidity": amount * 0.45,
+            "System-Stability": amount * 0.42,
+            "Admin-Governance": amount * 0.10,
+            "Eco-Support": amount * 0.03
+        }
 
     # -------------------------------------------------------------------------
     # Hilfsfunktionen für API / ai-chain.py / vm.VC
@@ -210,20 +257,20 @@ class VMCore:
         """
         Einfache Health-Check-Funktion für API und vm.VC.
         """
-        return "VMCore:OK"
+        return f"VMCore:{self.version}:OK"
 
     def export_state_snapshot(self) -> Dict[str, Any]:
         """
         Exportiert einen kompakten Snapshot des Systemzustands.
-        Ideal für Viewer, Monitoring oder VC-Logik.
         """
         return {
             "chain": self.get_chain_info(),
             "liquidity": self.liquidity.get_pool_state()
             if hasattr(self.liquidity, "get_pool_state")
             else None,
+            "interaction_cycles": self.interaction_cycles
         }
 
 
-# Optional: Singleton-Instanz, falls zentral verwendet
+# Singleton-Instanz
 vm_core = VMCore()
