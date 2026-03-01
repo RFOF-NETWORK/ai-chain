@@ -1,4 +1,4 @@
-import hashlib
+pimport hashlib
 import time
 import requests 
 
@@ -821,3 +821,76 @@ if __name__ == "__main__":
         print("Layer:", self.layers)
         print("User:", list(self.balances.keys()))
 
+# -------------------------------------------------
+# SYSTEM-HEALTH / SELF-DIAGNOSTICS
+# -------------------------------------------------
+def system_health(self):
+        return {
+            "chain_length": len(self.chain),
+            "last_block_hash": self.chain[-1]["hash"] if self.chain else None,
+            "roundtrip": self.roundtrip,
+            "trip": self.trip,
+            "safe": self.safe_value,
+            "eccu_total": self.eccu_total if hasattr(self, "eccu_total") else None,
+            "registered_users": list(self.balances.keys()),
+            "btc_rpc_online": self._check_btc_rpc(),
+            "ton_api_online": self._check_ton_api(),
+            "staking_positions": {
+                u: len(p) for u, p in self.staking_positions.items()
+            } if hasattr(self, "staking_positions") else {},
+        }
+
+    def _check_btc_rpc(self):
+        try:
+            self.btc_rpc_call("getblockcount")
+            return True
+        except:
+            return False
+
+    def _check_ton_api(self):
+        try:
+            self.ton_api_call("getMasterchainInfo")
+            return True
+        except:
+            return False
+
+# -------------------------------------------------
+# CONSENSUS / BLOCK-VALIDATION
+# -------------------------------------------------
+def validate_block(self, block):
+        if "index" not in block or "timestamp" not in block or "data" not in block:
+            return False
+        if "prev_hash" not in block or "hash" not in block or "nonce" not in block:
+            return False
+
+        recalculated = self.hash_block({
+            "index": block["index"],
+            "timestamp": block["timestamp"],
+            "data": block["data"],
+            "prev_hash": block["prev_hash"],
+            "nonce": block["nonce"],
+        })
+
+        if recalculated != block["hash"]:
+            return False
+
+        if not block["hash"].startswith("0" * self.difficulty):
+            return False
+
+        return True
+
+    def validate_chain(self):
+        if not self.chain:
+            return False
+
+        for i in range(1, len(self.chain)):
+            prev = self.chain[i - 1]
+            curr = self.chain[i]
+
+            if curr["prev_hash"] != prev["hash"]:
+                return False
+
+            if not self.validate_block(curr):
+                return False
+
+        return True
