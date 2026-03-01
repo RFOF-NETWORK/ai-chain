@@ -894,45 +894,120 @@ def validate_block(self, block):
                 return False
 
         return True
+
 # -------------------------------------------------
 # SYSTEM-INTEGRATION / SELF-LINKING ENGINE
 # -------------------------------------------------
 
     def integrate_system(self):
+        # 1) High-level readiness (deine ursprünglichen Flags)
+        identity_root = hasattr(self, "owner") and hasattr(self, "fond") and hasattr(self, "system")
+        login_ready = hasattr(self, "current_user")
+        chain_ready = isinstance(getattr(self, "chain", None), list) and len(self.chain) > 0 if hasattr(self, "chain") else False
+        hashing_ready = callable(getattr(self, "hash_block", None))
+        mining_ready = callable(getattr(self, "mine_user_block", None))
+        trip_roundtrip_ready = hasattr(self, "trip") and hasattr(self, "roundtrip")
+        safe_ready = hasattr(self, "safe_value")
+        eccu_ready = hasattr(self, "eccu_total") or hasattr(self, "eccu")
+        swap_ready = callable(getattr(self, "swap_tokens", None))
+        send_ready = callable(getattr(self, "send_token", None))
+        btc_bridge_ready = hasattr(self, "btc_rpc_url") and callable(getattr(self, "btc_rpc_call", None))
+        ton_bridge_ready = hasattr(self, "ton_api_url") and callable(getattr(self, "ton_api_call", None))
+        deposit_ready = hasattr(self, "btc_deposit_map") and hasattr(self, "ton_deposit_map")
+        payout_ready = (
+            callable(getattr(self, "user_payout_token_btc_onchain", None)) and
+            callable(getattr(self, "user_payout_token_ton_onchain", None))
+        )
+        staking_ready = hasattr(self, "staking_positions")
+        analytics_ready = callable(getattr(self, "show_chain_metrics", None))
+        health_ready = callable(getattr(self, "system_health", None))
+        consensus_ready = callable(getattr(self, "validate_chain", None))
+
+        full_system_ready_flags = all([
+            hasattr(self, "owner"),
+            hasattr(self, "fond"),
+            hasattr(self, "system"),
+            hasattr(self, "chain"),
+            hasattr(self, "difficulty"),
+            hasattr(self, "trip"),
+            hasattr(self, "roundtrip"),
+            hasattr(self, "safe_value"),
+            hasattr(self, "balances"),
+            hasattr(self, "staking_positions"),
+            callable(getattr(self, "hash_block", None)),
+            callable(getattr(self, "validate_chain", None)),
+            callable(getattr(self, "system_health", None)),
+        ])
+
+        # 2) Health + Consensus (deterministisch)
+        health = self.system_health() if health_ready else {}
+        consensus = {"valid_chain": self.validate_chain()} if consensus_ready else {"valid_chain": False}
+
+        # 3) Repository-Check (95 Elemente, 1:1 aus check_repository)
+        repo = self.check_repository()
+
+        # 4) Chain-Status
+        chain_status = {
+            "chain_exists": hasattr(self, "chain"),
+            "chain_length": len(self.chain) if hasattr(self, "chain") else 0,
+            "last_block_hash": self.chain[-1]["hash"] if hasattr(self, "chain") and len(self.chain) > 0 else None
+        }
+
+        # 5) User-Status
+        user_status = {
+            "current_user": getattr(self, "current_user", None),
+            "user_count": len(self.balances) if hasattr(self, "balances") else 0
+        }
+
+        # 6) SAFE/ECCU
+        safe_eccu = {
+            "safe_value": getattr(self, "safe_value", None),
+            "eccu_total": getattr(self, "eccu_total", None)
+        }
+
+        # 7) Node-Status (aus Health)
+        node_status = {
+            "btc_rpc_online": health.get("btc_rpc_online", False),
+            "ton_api_online": health.get("ton_api_online", False)
+        }
+
+        # 8) Vollständige, deterministische Integrations-Matrix
         return {
-            "identity_root": hasattr(self, "owner") and hasattr(self, "fond") and hasattr(self, "system"),
-            "login_ready": hasattr(self, "current_user"),
-            "chain_ready": isinstance(self.chain, list) and len(self.chain) > 0,
-            "hashing_ready": callable(getattr(self, "hash_block", None)),
-            "mining_ready": callable(getattr(self, "mine_user_block", None)),
-            "trip_roundtrip_ready": hasattr(self, "trip") and hasattr(self, "roundtrip"),
-            "safe_ready": hasattr(self, "safe_value"),
-            "eccu_ready": hasattr(self, "eccu_total") or hasattr(self, "eccu"),
-            "swap_ready": callable(getattr(self, "swap_tokens", None)),
-            "send_ready": callable(getattr(self, "send_token", None)),
-            "btc_bridge_ready": hasattr(self, "btc_rpc_url") and callable(getattr(self, "btc_rpc_call", None)),
-            "ton_bridge_ready": hasattr(self, "ton_api_url") and callable(getattr(self, "ton_api_call", None)),
-            "deposit_ready": hasattr(self, "btc_deposit_map") and hasattr(self, "ton_deposit_map"),
-            "payout_ready": callable(getattr(self, "user_payout_token_btc_onchain", None)) and callable(getattr(self, "user_payout_token_ton_onchain", None)),
-            "staking_ready": hasattr(self, "staking_positions"),
-            "analytics_ready": callable(getattr(self, "show_chain_metrics", None)),
-            "health_ready": callable(getattr(self, "system_health", None)),
-            "consensus_ready": callable(getattr(self, "validate_chain", None)),
-            "full_system_ready": all([
-                hasattr(self, "owner"),
-                hasattr(self, "fond"),
-                hasattr(self, "system"),
-                hasattr(self, "chain"),
-                hasattr(self, "difficulty"),
-                hasattr(self, "trip"),
-                hasattr(self, "roundtrip"),
-                hasattr(self, "safe_value"),
-                hasattr(self, "balances"),
-                hasattr(self, "staking_positions"),
-                callable(getattr(self, "hash_block", None)),
-                callable(getattr(self, "validate_chain", None)),
-                callable(getattr(self, "system_health", None)),
-            ])
+            "readiness": {
+                "identity_root": identity_root,
+                "login_ready": login_ready,
+                "chain_ready": chain_ready,
+                "hashing_ready": hashing_ready,
+                "mining_ready": mining_ready,
+                "trip_roundtrip_ready": trip_roundtrip_ready,
+                "safe_ready": safe_ready,
+                "eccu_ready": eccu_ready,
+                "swap_ready": swap_ready,
+                "send_ready": send_ready,
+                "btc_bridge_ready": btc_bridge_ready,
+                "ton_bridge_ready": ton_bridge_ready,
+                "deposit_ready": deposit_ready,
+                "payout_ready": payout_ready,
+                "staking_ready": staking_ready,
+                "analytics_ready": analytics_ready,
+                "health_ready": health_ready,
+                "consensus_ready": consensus_ready,
+                "full_system_ready_flags": full_system_ready_flags,
+            },
+            "health": health,
+            "consensus": consensus,
+            "repository": repo,          # hier hängen 1:1 alle 95 Files
+            "chain": chain_status,
+            "user": user_status,
+            "safe_eccu": safe_eccu,
+            "node": node_status,
+            "system_ready": (
+                consensus.get("valid_chain", False)
+                and all(repo.values())
+                and chain_status["chain_exists"]
+                and chain_status["chain_length"] > 0
+                and full_system_ready_flags
+            )
         }
 
     def print_system_integration(self):
@@ -941,3 +1016,271 @@ def validate_block(self, block):
         for key, value in status.items():
             print(f"{key}: {value}")
 
+# -------------------------------------------------
+# SYSTEM-INTEGRATION / FILE-CHECK (95 ELEMENTE)
+# -------------------------------------------------
+
+import os
+import importlib
+
+    def _file(self, path):
+        return os.path.exists(path)
+
+    def _module(self, path):
+        try:
+            importlib.import_module(path)
+            return True
+        except:
+            return False
+
+    def check_repository(self):
+        return {
+
+            # ROOT FILES
+            "index_html": self._file("index.html"),
+            "styles_css": self._file("styles.css"),
+            "ai_chain_py": self._file("ai-chain.py"),
+            "main_py": self._file("main.py"),
+            "ai_token_py": self._file("ai_token.py"),
+            "coin_token_py": self._file("coin_token.py"),
+            "aiclptoken_py": self._file("aiclptoken.py"),
+            "smartcontracts_py": self._file("smartcontracts.py"),
+            "block_json": self._file("block.json"),
+            "vm_vc": self._file("vm.VC"),
+            "vc_ecc": self._file("VC.ecc"),
+            "admin_rules_py": self._file("admin-rules.py"),
+            "architecture_md": self._file("ARCHITECTURE.md"),
+            "changelog_md": self._file("CHANGELOG.md"),
+            "code_of_conduct_md": self._file("CODEOFCONDUCT.md"),
+            "contributing_py": self._file("CONTRIBUTING.py"),
+            "governance_md": self._file("GOVERNANCE.md"),
+            "language_md": self._file("LANGUAGE.md"),
+            "license": self._file("LICENSE"),
+            "readme_md": self._file("README.md"),
+            "security_md": self._file("SECURITY.md"),
+            "state_philosophy_md": self._file("STATE-PHILOSOPHY.md"),
+            "support_md": self._file("SUPPORT.md"),
+            "vc_mechatronics_md": self._file("VC-MECHATRONICS.md"),
+            "whitepaper_md": self._file("WHITEPAPER.md"),
+
+            # SCRIPTS/
+            "scripts_ui_js": self._file("scripts/ui.js"),
+            "scripts_charts_js": self._file("scripts/charts.js"),
+            "scripts_hash_js": self._file("scripts/hash-generator.js"),
+            "scripts_login_js": self._file("scripts/login.js"),
+            "scripts_register_js": self._file("scripts/register.js"),
+            "scripts_admin_js": self._file("scripts/admin.js"),
+            "scripts_banking_js": self._file("scripts/banking.js"),
+            "scripts_dex_js": self._file("scripts/dex.js"),
+            "scripts_auth_logic_js": self._file("scripts/auth-logic.js"),
+            "scripts_readme": self._file("scripts/README.md"),
+
+            # CORE/
+            "core_vm_core_py": self._file("core/vm_core.py"),
+            "core_blockchain_py": self._file("core/blockchain.py"),
+            "core_fees_py": self._file("core/fees.py"),
+            "core_hash_generator_py": self._file("core/hash-generator.py"),
+            "core_wallet_address_gen_py": self._file("core/wallet-adress-generator.py"),
+            "core_admin_py": self._file("core/admin.py"),
+            "core_banking_py": self._file("core/banking.py"),
+            "core_dex_py": self._file("core/dex.py"),
+            "core_login_py": self._file("core/login.py"),
+            "core_logout_py": self._file("core/logout.py"),
+            "core_register_py": self._file("core/register.py"),
+            "core_security_py": self._file("core/security.py"),
+            "core_readme": self._file("core/README.md"),
+
+            # API/
+            "api_blocks_index_html": self._file("api/blocks/index.html"),
+            "api_server_py": self._file("api/server.py"),
+            "api_main_py": self._file("api/main.py"),
+            "api_sync_py": self._file("api/sync.py"),
+            "api_marketprice_py": self._file("api/marketprice.py"),
+            "api_deposit_py": self._file("api/deposit.py"),
+            "api_withdraw_py": self._file("api/withdraw.py"),
+            "api_swap_py": self._file("api/swap.py"),
+            "api_wallet_api_py": self._file("api/wallet_api.py"),
+            "api_login_py": self._file("api/login.py"),
+            "api_logout_py": self._file("api/logout.py"),
+            "api_register_py": self._file("api/register.py"),
+            "api_readme": self._file("api/README.md"),
+
+            # DATA/
+            "data_chain_json": self._file("data/chain.json"),
+            "data_users_json": self._file("data/users.json"),
+            "data_settings_json": self._file("data/settings.json"),
+            "data_admin_json": self._file("data/admin.json"),
+            "data_banking_json": self._file("data/banking.json"),
+            "data_dex_json": self._file("data/dex.json"),
+            "data_readme": self._file("data/README.md"),
+
+            # WALLET/
+            "wallet_system_py": self._file("wallet/wallet_system.py"),
+            "wallet_readme": self._file("wallet/README.md"),
+
+            # VIEWER/
+            "viewer_chain_viewer_py": self._file("viewer/chain_viewer.py"),
+            "viewer_portfolio_viewer_py": self._file("viewer/portfolio_viewer.py"),
+            "viewer_readme": self._file("viewer/README.md"),
+
+            # ECCU/
+            "eccu_vc_eccu_py": self._file("ECCU/vc_eccu.py"),
+            "eccu_fond_py": self._file("ECCU/eccu_fond.py"),
+            "eccu_license": self._file("ECCU/LICENSE"),
+            "eccu_readme": self._file("ECCU/README.md"),
+
+            # LIQUIDITY/
+            "liquidity_readme": self._file("liquidity/README.md"),
+
+            # DOCUMENTATION/
+            "documentation_whitepaper": self._file("documentation/WHITEPAPER.md"),
+
+            # .GITHUB/
+            "github_codeowners": self._file(".github/CODEOWNERS"),
+            "github_funding": self._file(".github/FUNDING.yml"),
+            "github_pr_template": self._file(".github/PULLREQUESTTEMPLATE.md"),
+            "github_issue_bug": self._file(".github/ISSUE_TEMPLATE/bug_report.md"),
+            "github_issue_feature": self._file(".github/ISSUE_TEMPLATE/future_request.md"),
+        }
+
+# -------------------------------------------------
+# KONSOLE / TERMINAL / SANDBOX (DETERMINISTISCH)
+# -------------------------------------------------
+
+import os
+import importlib
+
+    # -----------------------------
+    # Hilfsfunktionen (deterministisch)
+    # -----------------------------
+    def _file(self, path):
+        return os.path.exists(path)
+
+    def _module(self, path):
+        try:
+            importlib.import_module(path)
+            return True
+        except:
+            return False
+
+    # -----------------------------
+    # Repository-Check (95 Elemente)
+    # -----------------------------
+    def check_repository(self):
+        repo = {}
+
+        # ROOT FILES
+        root_files = [
+            "index.html", "styles.css", "ai-chain.py", "main.py",
+            "ai_token.py", "coin_token.py", "aiclptoken.py",
+            "smartcontracts.py", "block.json", "vm.VC", "VC.ecc",
+            "admin-rules.py", "ARCHITECTURE.md", "CHANGELOG.md",
+            "CODEOFCONDUCT.md", "CONTRIBUTING.py", "GOVERNANCE.md",
+            "LANGUAGE.md", "LICENSE", "README.md", "SECURITY.md",
+            "STATE-PHILOSOPHY.md", "SUPPORT.md", "VC-MECHATRONICS.md",
+            "WHITEPAPER.md"
+        ]
+        for f in root_files:
+            repo[f] = self._file(f)
+
+        # SCRIPTS/
+        scripts = [
+            "scripts/ui.js", "scripts/charts.js", "scripts/hash-generator.js",
+            "scripts/login.js", "scripts/register.js", "scripts/admin.js",
+            "scripts/banking.js", "scripts/dex.js", "scripts/auth-logic.js",
+            "scripts/README.md"
+        ]
+        for f in scripts:
+            repo[f] = self._file(f)
+
+        # CORE/
+        core_files = [
+            "core/vm_core.py", "core/blockchain.py", "core/fees.py",
+            "core/hash-generator.py", "core/wallet-adress-generator.py",
+            "core/admin.py", "core/banking.py", "core/dex.py",
+            "core/login.py", "core/logout.py", "core/register.py",
+            "core/security.py", "core/README.md"
+        ]
+        for f in core_files:
+            repo[f] = self._file(f)
+
+        # API/
+        api_files = [
+            "api/blocks/index.html", "api/server.py", "api/main.py",
+            "api/sync.py", "api/marketprice.py", "api/deposit.py",
+            "api/withdraw.py", "api/swap.py", "api/wallet_api.py",
+            "api/login.py", "api/logout.py", "api/register.py",
+            "api/README.md"
+        ]
+        for f in api_files:
+            repo[f] = self._file(f)
+
+        # DATA/
+        data_files = [
+            "data/chain.json", "data/users.json", "data/settings.json",
+            "data/admin.json", "data/banking.json", "data/dex.json",
+            "data/README.md"
+        ]
+        for f in data_files:
+            repo[f] = self._file(f)
+
+        # WALLET/
+        wallet_files = [
+            "wallet/wallet_system.py", "wallet/README.md"
+        ]
+        for f in wallet_files:
+            repo[f] = self._file(f)
+
+        # VIEWER/
+        viewer_files = [
+            "viewer/chain_viewer.py", "viewer/portfolio_viewer.py",
+            "viewer/README.md"
+        ]
+        for f in viewer_files:
+            repo[f] = self._file(f)
+
+        # ECCU/
+        eccu_files = [
+            "ECCU/vc_eccu.py", "ECCU/eccu_fond.py",
+            "ECCU/LICENSE", "ECCU/README.md"
+        ]
+        for f in eccu_files:
+            repo[f] = self._file(f)
+
+        # LIQUIDITY/
+        repo["liquidity/README.md"] = self._file("liquidity/README.md")
+
+        # DOCUMENTATION/
+        repo["documentation/WHITEPAPER.md"] = self._file("documentation/WHITEPAPER.md")
+
+        # .GITHUB/
+        github_files = [
+            ".github/CODEOWNERS", ".github/FUNDING.yml",
+            ".github/PULLREQUESTTEMPLATE.md",
+            ".github/ISSUE_TEMPLATE/bug_report.md",
+            ".github/ISSUE_TEMPLATE/future_request.md"
+        ]
+        for f in github_files:
+            repo[f] = self._file(f)
+
+        return repo
+
+    # -----------------------------
+    # Sandbox-Kommandos (Whitelist)
+    # -----------------------------
+    def console_command(self, cmd):
+        if cmd == "health":
+            return self.system_health()
+        if cmd == "consensus":
+            return {"valid_chain": self.validate_chain()}
+        if cmd == "files":
+            return self.check_repository()
+        if cmd == "integration":
+            return self.integrate_system()
+        return {"error": "unknown command"}
+
+    # -----------------------------
+    # Integration (Frontend/API)
+    # -----------------------------
+    def console_api(self, cmd):
+        return self.console_command(cmd)
