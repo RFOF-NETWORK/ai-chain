@@ -269,6 +269,22 @@ def show_block_details(block):
 
 asyncio.ensure_future(load_blocks())
 
+#------------------------------
+# CONSOLE
+# -----------------------------
+def console_command(self, cmd):
+    if cmd == "health":
+        return self.system_health()
+    if cmd == "metrics":
+        return self.show_chain_metrics()
+    if cmd == "chain":
+        return self.chain
+    if cmd == "user":
+        return self.user_profiles
+    if cmd == "balances":
+        return self.balances
+    return f"Unknown command: {cmd}"
+  
 # -----------------------------
 # Wallet Logic (simplified)
 # -----------------------------
