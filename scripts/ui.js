@@ -245,6 +245,25 @@ Object.assign(window, {
     registerUser
 });
 
+// -----------------------------------------------------------------------------
+// Console – Web → Python Bridge
+// -----------------------------------------------------------------------------
+
+document.getElementById("btn-console-run").onclick = async () => {
+    const cmd = document.getElementById("console-input").value;
+    const out = document.getElementById("console-output");
+
+    try {
+        const result = await pyodide.runPythonAsync(`
+from ai_chain import chain
+chain.console_command("${cmd}")
+        `);
+        out.textContent = result || "OK";
+    } catch (e) {
+        out.textContent = "Error: " + e;
+    }
+};
+
 // Automatischer Start beim Laden, um Genesis-Block zu zeigen
 document.addEventListener("DOMContentLoaded", () => {
     setTimeout(update_chain_viewer, 500); // Delay für PyScript/VM-Initialisierung
