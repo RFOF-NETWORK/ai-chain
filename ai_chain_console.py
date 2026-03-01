@@ -894,3 +894,50 @@ def validate_block(self, block):
                 return False
 
         return True
+# -------------------------------------------------
+# SYSTEM-INTEGRATION / SELF-LINKING ENGINE
+# -------------------------------------------------
+
+    def integrate_system(self):
+        return {
+            "identity_root": hasattr(self, "owner") and hasattr(self, "fond") and hasattr(self, "system"),
+            "login_ready": hasattr(self, "current_user"),
+            "chain_ready": isinstance(self.chain, list) and len(self.chain) > 0,
+            "hashing_ready": callable(getattr(self, "hash_block", None)),
+            "mining_ready": callable(getattr(self, "mine_user_block", None)),
+            "trip_roundtrip_ready": hasattr(self, "trip") and hasattr(self, "roundtrip"),
+            "safe_ready": hasattr(self, "safe_value"),
+            "eccu_ready": hasattr(self, "eccu_total") or hasattr(self, "eccu"),
+            "swap_ready": callable(getattr(self, "swap_tokens", None)),
+            "send_ready": callable(getattr(self, "send_token", None)),
+            "btc_bridge_ready": hasattr(self, "btc_rpc_url") and callable(getattr(self, "btc_rpc_call", None)),
+            "ton_bridge_ready": hasattr(self, "ton_api_url") and callable(getattr(self, "ton_api_call", None)),
+            "deposit_ready": hasattr(self, "btc_deposit_map") and hasattr(self, "ton_deposit_map"),
+            "payout_ready": callable(getattr(self, "user_payout_token_btc_onchain", None)) and callable(getattr(self, "user_payout_token_ton_onchain", None)),
+            "staking_ready": hasattr(self, "staking_positions"),
+            "analytics_ready": callable(getattr(self, "show_chain_metrics", None)),
+            "health_ready": callable(getattr(self, "system_health", None)),
+            "consensus_ready": callable(getattr(self, "validate_chain", None)),
+            "full_system_ready": all([
+                hasattr(self, "owner"),
+                hasattr(self, "fond"),
+                hasattr(self, "system"),
+                hasattr(self, "chain"),
+                hasattr(self, "difficulty"),
+                hasattr(self, "trip"),
+                hasattr(self, "roundtrip"),
+                hasattr(self, "safe_value"),
+                hasattr(self, "balances"),
+                hasattr(self, "staking_positions"),
+                callable(getattr(self, "hash_block", None)),
+                callable(getattr(self, "validate_chain", None)),
+                callable(getattr(self, "system_health", None)),
+            ])
+        }
+
+    def print_system_integration(self):
+        status = self.integrate_system()
+        print("----- SYSTEM-INTEGRATION STATUS -----")
+        for key, value in status.items():
+            print(f"{key}: {value}")
+
