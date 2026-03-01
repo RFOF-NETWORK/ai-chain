@@ -101,6 +101,20 @@
       <div id="block-details" class="wallet-info"></div>
     </section>
 
+        <!-- CONSOLE -->
+    <section id="section-console" class="section hidden">
+      <h2>AI‑Chain Console</h2>
+
+      <div class="wallet-info">
+       <h3>Console Input</h3>
+       <input id="console-input" type="text" placeholder="cmd: health / metrics / chain / user / block / payout ..." style="width: 100%;" />
+       <button id="btn-console-run">Run</button>
+
+       <h3>Output</h3>
+       <pre id="console-output" style="min-height: 200px; background: #0b0d14; padding: 10px; border: 1px solid #222;"></pre>
+      </div>
+    </section>
+
     <!-- WALLET -->
     <section id="section-wallet" class="section hidden">
       <h2>Wallet</h2>
@@ -272,6 +286,22 @@ def show_block_details(block):
     block_details_el.appendChild(pre)
 
 asyncio.ensure_future(load_blocks())
+
+#------------------------------
+# CONSOLE
+# -----------------------------
+def console_command(self, cmd):
+    if cmd == "health":
+        return self.system_health()
+    if cmd == "metrics":
+        return self.show_chain_metrics()
+    if cmd == "chain":
+        return self.chain
+    if cmd == "user":
+        return self.user_profiles
+    if cmd == "balances":
+        return self.balances
+    return f"Unknown command: {cmd}"
 
 # -----------------------------
 # Wallet Logic (simplified)
