@@ -47,14 +47,15 @@
 </head>
 <body>
   <header>
-    <div>AI-Chain – RFOF-NETWORK</div>
+    <div>AI-Chain – RFOF-NETWORKh</div>
     <nav>
       <a id="nav-chain" class="active" onclick="showSection('chain')">Chain</a>
+      <a id="nav-console" onclick="showSection('console')">Console</a>
       <a id="nav-wallet" onclick="showSection('wallet')">Wallet</a>
       <a id="nav-market" onclick="showSection('market')">Marketplace</a>
       <a id="nav-settings" onclick="showSection('settings')">Settings</a>
     </nav>
-  </header>
+</header>
 
   <main>
     <!-- CHAIN VIEWER -->
@@ -81,6 +82,20 @@
 
       <h3>Block Details</h3>
       <div id="block-details" class="wallet-info"></div>
+    </section>
+
+    <!-- CONSOLE -->
+    <section id="section-console" class="section hidden">
+      <h2>AI‑Chain Console</h2>
+
+      <div class="wallet-info">
+       <h3>Console Input</h3>
+       <input id="console-input" type="text" placeholder="cmd: health / metrics / chain / user / block / payout ..." style="width: 100%;" />
+       <button id="btn-console-run">Run</button>
+
+       <h3>Output</h3>
+       <pre id="console-output" style="min-height: 200px; background: #0b0d14; padding: 10px; border: 1px solid #222;"></pre>
+      </div>
     </section>
 
     <!-- WALLET -->
