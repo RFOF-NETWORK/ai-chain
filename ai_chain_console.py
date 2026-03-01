@@ -1,5 +1,6 @@
 import hashlib
 import time
+import requests 
 
 
 class AIChain:
@@ -538,3 +539,285 @@ class AIChain:
 if __name__ == "__main__":
     chain = AIChain()
     chain.start_console()
+# -------------------------------------------------
+        # EXTERNE NODE-ANBINDUNG (BTC CORE / TON CORE)
+        # -------------------------------------------------
+        # BTC Core JSON-RPC (lokaler oder externer Node)
+        self.btc_rpc_url = "http://127.0.0.1:8332"
+        self.btc_rpc_user = "user"
+        self.btc_rpc_password = "pass"
+
+        # TON "Core" / HTTP-API / Toncenter / eigene Node
+        self.ton_api_url = "https://toncenter.com/api/v2/jsonRPC"
+        self.ton_api_key = "DEIN_TON_API_KEY"  # falls nötig, sonst None
+
+        # interne Mapping-Tabellen für Einzahlungen
+        # externe Adresse → interner User
+        self.btc_deposit_map = {}  # z.B. {"bc1xyz...": "Satoramy"}
+        self.ton_deposit_map = {}  # z.B. {"UQxyz...": "Satoramy"} 
+# -------------------------------------------------
+    # BTC CORE RPC-CLIENT
+    # -------------------------------------------------
+
+    def btc_rpc_call(self, method, params=None):
+        if params is None:
+            params = []
+        payload = {
+            "jsonrpc": "1.0",
+            "id": "aichain",
+            "method": method,
+            "params": params,
+        }
+        r = requests.post(
+            self.btc_rpc_url,
+            json=payload,
+            auth=(self.btc_rpc_user, self.btc_rpc_password),
+            timeout=10,
+        )
+        r.raise_for_status()
+        data = r.json()
+        if data.get("error"):
+            raise RuntimeError(f"BTC RPC Error: {data['error']}")
+        return data["result"]
+# -------------------------------------------------
+    # TON API-CLIENT
+    # -------------------------------------------------
+
+    def ton_api_call(self, method, params=None):
+        if params is None:
+            params = {}
+        payload = {
+            "jsonrpc": "2.0",
+            "id": "aichain",
+            "method": method,
+            "params": params,
+        }
+        headers = {}
+        if self.ton_api_key:
+            headers["X-API-Key"] = self.ton_api_key
+
+        r = requests.post(
+            self.ton_api_url,
+            json=payload,
+            headers=headers,
+            timeout=10,
+        )
+        r.raise_for_status()
+        data = r.json()
+        if "error" in data and data["error"]:
+            raise RuntimeError(f"TON API Error: {data['error']}")
+        return data["result"]
+
+# -------------------------------------------------
+    # EXTERNE EINZAHLUNG: BTC → INTERNE TOKENS
+    # -------------------------------------------------
+
+    def register_btc_deposit_address(self, user, btc_address):
+        """
+        Verknüpft eine BTC-Adresse mit einem internen User für automatische Gutschriften.
+        """
+        self.ensure_user(user)
+        self.btc_deposit_map[btc_address] = user
+        print("[BTC DEPOSIT MAP] ", btc_address, "→", user)
+
+    def scan_btc_deposits(self, min_conf=1, token="AI"):
+        """
+        Liest BTC-Core-Transaktionen und schreibt interne Gutschriften gut.
+        Vereinfachte Variante: listtransactions + Mapping.
+        """
+        print("[BTC DEPOSIT SCAN]")
+        txs = self.btc_rpc_call("listtransactions", ["*", 100])
+        for tx in txs:
+            if not tx.get("address"):
+                continue
+            addr = tx["address"]
+            amount = tx.get("amount", 0.0)
+            confirmations = tx.get("confirmations", 0)
+            category = tx.get("category")
+
+            if category != "receive":
+                continue
+            if confirmations < min_conf:
+                continue
+            if addr not in self.btc_deposit_map:
+                continue
+
+            user = self.btc_deposit_map[addr]
+            self.ensure_user(user)
+
+            # BTC-Wert → interne Token (z.B. 1 BTC = X AI)
+            # Hier: einfacher 1:1-Wert in AI-Preis-Einheiten
+            value_in_fiat = amount  # Platzhalter: 1 BTC = 1 "Wert"
+            token_price = self.get_price(token)
+            token_amount = value_in_fiat / token_price
+
+            self.balances[user][token] += token_amount
+            print("[BTC DEPOSIT CREDIT]", user, token_amount, token, "für", amount, "BTC an", addr)
+
+# -------------------------------------------------
+    # EXTERNE EINZAHLUNG: TON → INTERNE TOKENS
+    # -------------------------------------------------
+
+    def register_ton_deposit_address(self, user, ton_address):
+        self.ensure_user(user)
+        self.ton_deposit_map[ton_address] = user
+        print("[TON DEPOSIT MAP] ", ton_address, "→", user)
+
+    def scan_ton_deposits(self, token="AI"):
+        """
+        Beispielhaft: du musst hier die konkrete TON-API anpassen.
+        Idee: getTransactions(address) → Mapping → Gutschrift.
+        """
+        print("[TON DEPOSIT SCAN]")
+        for addr, user in self.ton_deposit_map.items():
+            # Pseudocode – API hängt von deinem Provider ab
+            try:
+                result = self.ton_api_call("getTransactions", {"address": addr})
+            except Exception as e:
+                print("[TON API ERROR]", e)
+                continue
+
+            # result-Struktur hängt von API ab – hier nur Platzhalter
+            txs = result.get("transactions", [])
+            for tx in txs:
+                amount = tx.get("amount", 0.0)
+                incoming = tx.get("incoming", True)
+                if not incoming:
+                    continue
+
+                self.ensure_user(user)
+                value_in_fiat = amount  # Platzhalter
+                token_price = self.get_price(token)
+                token_amount = value_in_fiat / token_price
+
+                self.balances[user][token] += token_amount
+                print("[TON DEPOSIT CREDIT]", user, token_amount, token, "für", amount, "TON an", addr)
+
+
+# -------------------------------------------------
+    # EXTERNE AUSZAHLUNG: INTERNE TOKENS → BTC CORE
+    # -------------------------------------------------
+
+    def user_payout_token_btc_onchain(self):
+        user = self.current_user
+        self.ensure_user(user)
+        token = input("Token (AI/COIN): ").strip()
+        amount = float(input("Menge: "))
+
+        btc = self.user_profiles[user]["btc"]
+        if not btc:
+            print("Keine BTC-Adresse für", user)
+            return
+
+        # interner Abzug
+        self.balances[user][token] -= amount
+
+        # Wert in BTC (Platzhalter: 1 Token = 1 BTC-Einheit / Preis)
+        value = amount * self.get_price(token)
+        btc_amount = value  # hier musst du deine eigene Logik definieren
+
+        # BTC-Core-Transaktion bauen
+        try:
+            txid = self.btc_rpc_call("sendtoaddress", [btc, btc_amount])
+            print("[USER PAYOUT BTC ONCHAIN]", user, token, amount, "→", btc_amount, "BTC an", btc, "TXID:", txid)
+        except Exception as e:
+            print("[BTC PAYOUT ERROR]", e)
+
+# -------------------------------------------------
+    # EXTERNE AUSZAHLUNG: INTERNE TOKENS → TON
+    # -------------------------------------------------
+
+    def user_payout_token_ton_onchain(self):
+        user = self.current_user
+        self.ensure_user(user)
+        token = input("Token (AI/COIN): ").strip()
+        amount = float(input("Menge: "))
+
+        ton = self.user_profiles[user]["ton"]
+        if not ton:
+            print("Keine TON-Adresse für", user)
+            return
+
+        self.balances[user][token] -= amount
+
+        value = amount * self.get_price(token)
+        ton_amount = value  # Platzhalter
+
+        # TON-Transfer – API hängt von deinem Provider ab
+        try:
+            result = self.ton_api_call("sendTransaction", {
+                "to": ton,
+                "amount": ton_amount,
+            })
+            print("[USER PAYOUT TON ONCHAIN]", user, token, amount, "→", ton_amount, "TON an", ton, "RESULT:", result)
+        except Exception as e:
+            print("[TON PAYOUT ERROR]", e)
+
+# -------------------------------------------------
+    # STAKING-MODUL
+    # -------------------------------------------------
+
+    def stake_ai(self, user, amount):
+        """
+        Einfaches Staking: AI wird gelockt, SAFE wächst, später Claim möglich.
+        """
+        self.ensure_user(user)
+        if self.balances[user]["AI"] < amount:
+            print("Zu wenig AI zum Staken.")
+            return
+
+        if not hasattr(self, "staking_positions"):
+            self.staking_positions = {}
+
+        self.balances[user]["AI"] -= amount
+        pos = {
+            "amount": amount,
+            "start_roundtrip": self.roundtrip,
+        }
+        self.staking_positions.setdefault(user, []).append(pos)
+        print("[STAKING] ", user, "staked", amount, "AI")
+
+    def claim_staking_rewards(self, user):
+        """
+        Rewards = amount * (roundtrip_diff * Faktor)
+        """
+        self.ensure_user(user)
+        if not hasattr(self, "staking_positions"):
+            print("Keine Staking-Positionen.")
+            return
+
+        positions = self.staking_positions.get(user, [])
+        if not positions:
+            print("Keine Staking-Positionen für", user)
+            return
+
+        total_reward = 0.0
+        new_positions = []
+        for pos in positions:
+            diff = self.roundtrip - pos["start_roundtrip"]
+            if diff <= 0:
+                new_positions.append(pos)
+                continue
+            reward = pos["amount"] * diff * 0.001  # Faktor frei definierbar
+            total_reward += reward
+
+        self.staking_positions[user] = new_positions
+        self.balances[user]["AI"] += total_reward
+        print("[STAKING REWARD]", user, total_reward, "AI")
+
+# -------------------------------------------------
+    # ANALYTICS / METRICS
+    # -------------------------------------------------
+
+    def show_chain_metrics(self):
+        print("----- AI-CHAIN METRICS -----")
+        print("Blöcke:", len(self.chain))
+        print("SAFE:", self.safe_value)
+        print("Trip:", self.trip)
+        print("Roundtrip:", self.roundtrip)
+        print("OWNER:", self.owner)
+        print("FOND:", self.fond)
+        print("SYSTEM:", self.system)
+        print("Layer:", self.layers)
+        print("User:", list(self.balances.keys()))
+
