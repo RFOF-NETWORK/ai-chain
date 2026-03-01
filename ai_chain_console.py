@@ -8,13 +8,15 @@ class AIChain:
         # -------------------------------------------------
         # IDENTITÄT / ROOT
         # -------------------------------------------------
-        # AI-CHAIN ROOT-ADRESSE (KEIN BTC/TON, INTERN)
+        # AI-CHAIN ROOT-ADRESSE (KEIN BTC/TON, INTERN, ADMIN-WALLET)
         self.admin_address = "1JGSqDHRoEfwLaB4wh9Up9j7NgckpyYYjZ"
 
-        # 24-WORT ADMIN-PHRASE HASH (IDENTITÄT)
+        # 24-WORT ADMIN-PHRASE HASH (IDENTITÄTS-HASH)
+        # = AI-CHAIN-WALLET-ADRESSE VON SATORIA
         self.genesis_hash = "d18e84a3edbf211e65fe60a715c5bfbe264f8ed635b96058cfbf69e44b56d541"
 
-        # 48-WORT ADMIN-AP-PHRASE HASH (VALIDATION / WALLET-IDENTITÄT)
+        # 48-WORT ADMIN-AP-PHRASE HASH (VALIDATION-HASH)
+        # = AI-CHAIN-WALLET-ADRESSE VON SATORAMY
         self.genesis_validation_ap_hash = "5b3e57a9f4de5a155f5d7d33584467942b456d6e4b02f0139b47b0291f7e626b"
 
         self.founder_name = "Pinguin"
@@ -58,7 +60,7 @@ class AIChain:
         self.balances = {
             "system": {"AI": 0.0, "COIN": 0.0, "AIC-LP": 0.0, "ECCU": 0.0},
         }
-        # username -> {"btc": str|None, "ton": str|None, "identity_hash": str|None}
+        # username -> {"btc": str|None, "ton": str|None, "identity_hash": str|None, "ai_wallet": str|None}
         self.user_profiles = {}
 
         # -------------------------------------------------
@@ -91,7 +93,12 @@ class AIChain:
         if user not in self.balances:
             self.balances[user] = {"AI": 0.0, "COIN": 0.0, "AIC-LP": 0.0, "ECCU": 0.0}
         if user not in self.user_profiles:
-            self.user_profiles[user] = {"btc": None, "ton": None, "identity_hash": None}
+            self.user_profiles[user] = {
+                "btc": None,
+                "ton": None,
+                "identity_hash": None,
+                "ai_wallet": None,
+            }
 
     # ---------------------------------------------------------
     # GENESIS BLOCK
@@ -125,19 +132,21 @@ class AIChain:
         self.user_phrase_hashes[self.admin_login_name] = shared_phrase_hash
         self.user_profiles[self.admin_login_name]["btc"] = self.external_btc_address
         self.user_profiles[self.admin_login_name]["ton"] = self.external_ton_address
+        # Admin AI-Chain-Wallet = admin_address
+        self.user_profiles[self.admin_login_name]["ai_wallet"] = self.admin_address
         self.user_profiles[self.admin_login_name]["identity_hash"] = "ADMIN"
 
-        # 2) Satoramy: Genesis-Kind mit Validation-AP-Hash als Identitätsanker
+        # 2) Satoramy: Genesis-Kind mit Validation-Hash als AI-Chain-Wallet
         self.ensure_user("Satoramy")
         self.user_phrase_hashes["Satoramy"] = shared_phrase_hash
         self.user_profiles["Satoramy"]["identity_hash"] = self.genesis_validation_ap_hash
-        # BTC/TON werden manuell gesetzt wie bei allen Usern
+        self.user_profiles["Satoramy"]["ai_wallet"] = self.genesis_validation_ap_hash
 
-        # 3) Satoria: Genesis-Kind mit Genesis-Hash als Identitätsanker
+        # 3) Satoria: Genesis-Kind mit Genesis-Hash als AI-Chain-Wallet
         self.ensure_user("Satoria")
         self.user_phrase_hashes["Satoria"] = shared_phrase_hash
         self.user_profiles["Satoria"]["identity_hash"] = self.genesis_hash
-        # BTC/TON werden manuell gesetzt wie bei allen Usern
+        self.user_profiles["Satoria"]["ai_wallet"] = self.genesis_hash
 
     # ---------------------------------------------------------
     # HASHING
